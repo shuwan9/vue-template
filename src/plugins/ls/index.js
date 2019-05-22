@@ -23,15 +23,19 @@ const set = (key, value) => {
   return false
 }
 
+const ls = {
+  get,
+  set
+}
+
 const install = (Vue, options) => {
   if (installed) {
     return
   }
   installed = true
-  Vue.prototype.$ls = {
-    get,
-    set
-  }
+  Vue.prototype.$ls = ls
 }
+
+export { ls }
 
 export default { install }
