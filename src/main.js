@@ -4,9 +4,13 @@ import Vue from 'vue'
 import router from './router'
 import store from './store'
 
+import Quasar from 'quasar'
+
 import Ls from './plugins/ls'
 
 import App from './App.vue'
+
+Vue.use(Quasar)
 
 Vue.use(Ls)
 

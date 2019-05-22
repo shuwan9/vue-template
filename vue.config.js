@@ -3,5 +3,16 @@
  */
 
 module.exports = {
-  publicPath: '.'
+  publicPath: '.',
+  configureWebpack: {
+    // resolve: {
+    //   alias: {
+    //     quasar: 'quasar-framework/dist/quasar.mat.esm'
+    //   }
+    // },
+    externals: {
+      vue: 'Vue',
+      quasar: 'Quasar'
+    }
+  }
 }

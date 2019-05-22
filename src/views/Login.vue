@@ -1,6 +1,7 @@
 <template>
   <div class="login">
     this is login
+    <q-btn color="primary" v-ripple label="primary"></q-btn>
   </div>
 </template>
 
