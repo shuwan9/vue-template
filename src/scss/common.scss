@@ -1,0 +1,16 @@
+.cmn-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.cmn-middle {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.cmn-center-middle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
