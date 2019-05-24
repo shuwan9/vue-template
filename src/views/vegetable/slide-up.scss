@@ -1,0 +1,27 @@
+.cmn-slide-up-enter {
+    opacity: 0;
+    transform: translateY(100%);
+}
+
+.cmn-slide-up-enter-active {
+    transition: all 0.5s ease-in-out;
+}
+
+.cmn-slide-up-enter-to {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.cmn-slide-up-leave {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.cmn-slide-up-leave-active {
+    transition: all 0.5s ease-in-out;
+}
+
+.cmn-slide-up-leave-to {
+    opacity: 0;
+    transform: translateY(100%);
+}

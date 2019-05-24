@@ -7,7 +7,7 @@
         :autoplay="1500"
         :quick-nav="true"
         :infinite="true"
-        height="30vh;"
+        :height="carouselHeight"
       >
         <q-carousel-slide
           v-for="(value, index) in list"
@@ -17,7 +17,7 @@
         </q-carousel-slide>
       </q-carousel>
     </div>
-    <div class="nav">
+    <div class="nav" :style="navStyle">
       <router-link to="/vegetable/list">
         <q-btn>菜品列表</q-btn>
       </router-link>
@@ -35,11 +35,16 @@ import c from "../../assets/5.jpg";
 export default {
   data() {
     return {
-      list: []
+      list: [],
+      carouselHeight: "",
+      navStyle: ""
     };
   },
   methods: {},
   mounted() {
+    this.carouselHeight = window.innerHeight * 0.3 + "px";
+    this.navStyle = `height:${window.innerHeight *
+      0.1}px;line-height:${window.innerHeight * 0.1}px`;
     this.list = [
       {
         imgUrl: a
@@ -87,8 +92,8 @@ export default {
       }
       button {
         vertical-align: middle;
-        height: 5vh;
-        line-height: 5vh;
+        height: 40px;
+        line-height: 40px;
         padding: 0 10px;
         width: 45%;
         min-height: auto;

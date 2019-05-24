@@ -1,6 +1,6 @@
 <template>
   <div class="vegetable-order">
-    <div class="filter">
+    <div class="filter" ref="filter">
       <div
         class="container"
         @click="startCheck(1)"
@@ -22,31 +22,80 @@
         <div class="span">未完成</div>
       </div>
     </div>
-    <div class="page-infinite-wrapper">
-      <ul
+    <infinite-list
+      :style="{ height: height }"
+      :loading="loading"
+      :load-more="loadMore"
+    >
+      <div class="order" v-for="(order, index) in orders" :key="index">
+        <div class="left">
+          <img :src="order.imgUrl" alt="" />
+        </div>
+        <div class="right">
+          <div>
+            <span>下单时间:</span>
+            <span>2019-05-24 10:00:00</span>
+          </div>
+          <div>
+            <span>总价:</span>
+            <span>200</span>
+          </div>
+          <div>
+            <span>已完成</span>
+          </div>
+        </div>
+      </div>
+    </infinite-list>
+    <!-- <div class="page-infinite-wrapper" :style="{ height: height }">
+      <div
         class="page-infinite-list"
         v-infinite-scroll="loadMore"
         infinite-scroll-disabled="loading"
         infinite-scroll-distance="10"
       >
-        <li v-for="item in list" class="page-infinite-listitem" :key="item">
-          {{ item }}
-        </li>
-      </ul>
+        <div
+          v-for="(order, index) in orders"
+          class="page-infinite-listitem order"
+          :key="index"
+        >
+          <div class="left">
+            <img :src="order.imgUrl" alt="" />
+          </div>
+          <div class="right">
+            <div>
+              <span>下单时间:</span>
+              <span>2019-05-24 10:00:00</span>
+            </div>
+            <div>
+              <span>总价:</span>
+              <span>200</span>
+            </div>
+            <div>
+              <span>已完成</span>
+            </div>
+          </div>
+        </div>
+      </div>
       <p v-show="loading" class="page-infinite-loading">
         <mt-spinner type="fading-circle"></mt-spinner>
         加载中...
       </p>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>
+import a from "../../assets/1.jpg";
+import InfiniteList from "../../components/InfiniteList.vue";
 export default {
   data() {
     return {
       check: 0,
       loading: false,
-      list: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+      orders: [
+        { imgUrl: a, createDate: new Date(), des: "xxxxxxxxxx", total: 200 }
+      ],
+      height: null,
+      hasMoreOrder: true
     };
   },
   methods: {
@@ -58,16 +107,27 @@ export default {
       }
     },
     loadMore() {
-      console.log(1);
+      if (!this.hasMoreOrder) {
+        this.loading = false;
+        return;
+      }
       this.loading = true;
       setTimeout(() => {
-        let last = this.list[this.list.length - 1];
-        for (let i = 1; i <= 10; i++) {
-          this.list.push(last + i);
+        this.orders = this.orders.concat(this.orders);
+        if (this.orders.length >= 10) {
+          this.hasMoreOrder = false;
         }
         this.loading = false;
       }, 2500);
     }
+  },
+  mounted() {
+    const { offsetHeight } = this.$refs.filter;
+    this.height =
+      window.innerHeight - window.innerHeight * 0.4 - offsetHeight + "px";
+  },
+  components: {
+    InfiniteList
   }
 };
 </script>
@@ -85,12 +145,11 @@ export default {
       font-size: 14px;
       &.check {
         > div {
-          opacity: 1;
+          color: #027be3;
         }
       }
       div {
-        opacity: 0.3;
-        color: #027be3;
+        color: rgba($color: #027be3, $alpha: 0.5);
       }
       > div:nth-child(1) {
         margin-bottom: 1vh;
@@ -100,8 +159,36 @@ export default {
   .page-infinite-wrapper {
     margin-top: -1px;
     overflow: scroll;
-    height: 200px;
-    outline: 1px solid;
+    padding: 5px 5px;
+    .order {
+      font-size: 0;
+      padding: 10px 10px 15px 10px;
+      border-bottom: 1px solid #ccc;
+      .left,
+      .right {
+        display: inline-block;
+        vertical-align: middle;
+        font-size: 14px;
+      }
+      .left {
+        width: 40%;
+        img {
+          vertical-align: middle;
+          width: 90%;
+          text-align: center;
+          border-radius: 0px;
+        }
+      }
+      .right {
+        width: 60%;
+        div {
+          padding: 2px 5px;
+          &:nth-child(3) {
+            text-align: right;
+          }
+        }
+      }
+    }
     .page-infinite-loading {
       text-align: center;
       height: 50px;
