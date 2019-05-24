@@ -80,9 +80,11 @@ export default {
     login() {
       this.loading = true;
       setTimeout(() => {
-        this.$ls.set("hasLogin", true);
-        const toPath = this.$ls.get("toPath");
-        this.$router.push({ path: toPath ? toPath : "/main" });
+        this.$ls.set("signed", 1);
+        const to = this.$ls.get("to");
+        this.$router.push({
+          path: to ? to.path : "/vegetable/list"
+        });
       }, 1000);
     }
   },

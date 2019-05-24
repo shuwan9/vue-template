@@ -5,11 +5,15 @@ import router from './router'
 import store from './store'
 
 import Quasar from 'quasar'
+import { InfiniteScroll } from 'mint-ui'
 import Ls from './plugins/ls'
 
 import App from './App.vue'
 
 Vue.use(Quasar)
+
+Vue.use(InfiniteScroll)
+
 Vue.use(Ls)
 
 Vue.config.productionTip = false

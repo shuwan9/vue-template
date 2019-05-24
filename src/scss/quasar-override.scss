@@ -1,0 +1,19 @@
+.os-carousel {
+    .q-carousel-quick-nav {
+        background-color: transparent;
+
+        .q-btn.inactive {
+            .q-icon {
+                color: #fff;
+                font-size: 12px !important;
+            }
+        }
+
+        .q-focusable {
+            .q-icon {
+                color: #333;
+                font-size: 14px !important;
+            }
+        }
+    }
+}

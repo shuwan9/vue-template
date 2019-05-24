@@ -1,22 +1,23 @@
 import { ls } from '../../plugins/ls'
-const checkLogin = (to, from, next) => {
-  let hasLogin = ls.get('hasLogin')
+
+const checkSign = (to, from, next) => {
+  let signed = ls.get('signed')
   if (to.path === '/login') {
-    if (hasLogin) {
+    if (signed) {
       next({
-        path: 'main'
+        path: '/vegetable/list'
       })
     } else {
       next()
     }
   } else {
-    if (hasLogin) {
+    if (signed) {
       next()
     } else {
-      ls.set('toPath', to.path)
+      ls.set('to', to)
       next({ path: '/login' })
     }
   }
 }
 
-export default checkLogin
+export default checkSign
