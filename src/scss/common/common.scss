@@ -3,14 +3,33 @@
   left: 50%;
   transform: translateX(-50%);
 }
+
 .cmn-middle {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
 }
+
 .cmn-center-middle {
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+}
+
+.cmn-inline-block {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.cmn-text-align-left {
+  text-align: left;
+}
+
+.cmn-text-align-center {
+  text-align: center;
+}
+
+.cmn-text-align-right {
+  text-align: right;
 }

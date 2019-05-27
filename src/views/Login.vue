@@ -83,7 +83,7 @@ export default {
         this.$ls.set("signed", 1);
         const to = this.$ls.get("to");
         this.$router.push({
-          path: to ? to.path : "/vegetable/list"
+          path: to && to.path && to.path != "/" ? to.path : "/vegetable/list"
         });
       }, 1000);
     }

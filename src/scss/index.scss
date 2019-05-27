@@ -1,3 +1,11 @@
-@import './common.scss';
+@import './common/common.scss';
+@import './common/width.scss';
+
+
 @import './app.scss';
+
+
 @import './quasar-override.scss';
+
+
+@import './tranistion/slide-up.scss';
