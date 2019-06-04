@@ -1,19 +1,16 @@
-import Login from '../views/Login.vue'
+const _default = {
+  path: "/",
+  redirect: "/login"
+}
 
-const routes = [
-  {
-    path: '/',
-    name: 'login',
-    component: Login
-  },
-  {
-    path: '/main',
-    name: 'main',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/Main.vue')
-  }
-]
+const Login = {
+  path: "/login",
+  component: () => import("@/views/Login")
+}
 
-export default routes
+const Home = {
+  path: "/home",
+  component: () => import("@/views/Home")
+}
+
+export default [_default, Login, Home]

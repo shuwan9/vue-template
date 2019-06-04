@@ -5,7 +5,7 @@ const getType = value => {
     .toLowerCase()
 }
 const isFalse = value => {
-  return value === undefined || value === null || value === ''
+  return value === undefined || value === null || value === ""
 }
 const isTrue = value => {
   return !isFalse(value)
@@ -14,7 +14,7 @@ const isFile = value => {
   if (!value) {
     return false
   }
-  return getType(value) === 'file'
+  return getType(value) === "file"
 }
 
 export { getType, isFalse, isTrue, isFile }

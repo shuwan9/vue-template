@@ -1,13 +1,11 @@
 <template>
-  <div class="login">
-    this is login
-  </div>
+  <div class="login">this is login</div>
 </template>
 
 <script>
 // @ is an alias to /src
 
-import instance from "../axios/instance";
+import instance from "@/axios/instance";
 instance({
   url: "/get",
   method: "get",

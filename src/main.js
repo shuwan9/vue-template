@@ -1,19 +1,18 @@
-import './scss/index.scss'
+import "./scss/index.scss"
 
-import Vue from 'vue'
-import router from './router'
-import store from './store'
+import install from "@/install"
 
-import Ls from './plugins/ls'
+const Vue = install()
 
-import App from './App.vue'
+import router from "./router"
+import store from "./store"
 
-Vue.use(Ls)
+import App from "./App.vue"
 
 Vue.config.productionTip = false
 
 new Vue({
   router,
-  store,
+  // store,
   render: h => h(App)
-}).$mount('#app')
+}).$mount("#app")
