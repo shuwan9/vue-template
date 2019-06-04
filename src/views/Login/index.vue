@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     this is login
-    <el-button icon="el-icon-search" circle></el-button>
+    <mu-button color="primary">Primary</mu-button>
   </div>
 </template>
 
