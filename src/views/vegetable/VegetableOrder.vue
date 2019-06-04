@@ -27,7 +27,12 @@
       :loading="loading"
       :load-more="loadMore"
     >
-      <div class="order" v-for="(order, index) in orders" :key="index">
+      <div
+        class="order"
+        v-for="(order, index) in orders"
+        :key="index"
+        @click="goToOrderDetail(order)"
+      >
         <div class="left">
           <img :src="order.imgUrl" alt="" />
         </div>
@@ -84,52 +89,55 @@
   </div>
 </template>
 <script>
-import a from "../../assets/1.jpg";
-import InfiniteList from "../../components/InfiniteList.vue";
+import a from '../../assets/1.jpg'
+import InfiniteList from '../../components/InfiniteList.vue'
 export default {
   data() {
     return {
       check: 0,
       loading: false,
       orders: [
-        { imgUrl: a, createDate: new Date(), des: "xxxxxxxxxx", total: 200 }
+        { imgUrl: a, createDate: new Date(), des: 'xxxxxxxxxx', total: 200 }
       ],
       height: null,
       hasMoreOrder: true
-    };
+    }
   },
   methods: {
     startCheck(check) {
       if (this.check == check) {
-        this.check = 0;
+        this.check = 0
       } else {
-        this.check = check;
+        this.check = check
       }
     },
     loadMore() {
       if (!this.hasMoreOrder) {
-        this.loading = false;
-        return;
+        this.loading = false
+        return
       }
-      this.loading = true;
+      this.loading = true
       setTimeout(() => {
-        this.orders = this.orders.concat(this.orders);
+        this.orders = this.orders.concat(this.orders)
         if (this.orders.length >= 10) {
-          this.hasMoreOrder = false;
+          this.hasMoreOrder = false
         }
-        this.loading = false;
-      }, 2500);
+        this.loading = false
+      }, 2500)
+    },
+    goToOrderDetail(order) {
+      this.$router.push({ path: '/vegetable/orderDetail' })
     }
   },
   mounted() {
-    const { offsetHeight } = this.$refs.filter;
+    const { offsetHeight } = this.$refs.filter
     this.height =
-      window.innerHeight - window.innerHeight * 0.4 - offsetHeight + "px";
+      window.innerHeight - window.innerHeight * 0.4 - offsetHeight + 'px'
   },
   components: {
     InfiniteList
   }
-};
+}
 </script>
 <style lang="scss">
 .vegetable-order {
@@ -202,5 +210,3 @@ export default {
   }
 }
 </style>
-
-

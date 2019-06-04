@@ -1,0 +1,23 @@
+.cmn-fade-in-enter {
+    opacity: 0;
+}
+
+.cmn-fade-in-enter-active {
+    transition: all .5s ease-in-out;
+}
+
+.cmn-fade-in-enter-to {
+    opacity: 1;
+}
+
+.cmn-fade-in-leave {
+    opacity: 1;
+}
+
+.cmn-fade-in-leave-active {
+    transition: all .5s ease-in-out;
+}
+
+.cmn-fade-in-leave-to {
+    opacity: 0;
+}

@@ -8,12 +8,10 @@ export default {
   data() {
     return {
       show: true
-    };
+    }
   },
-  destroyed() {
-    console.log("2 destroyed");
-  }
-};
+  destroyed() {}
+}
 </script>
 
 <style lang="scss">
@@ -27,4 +25,3 @@ export default {
   background-color: rgba($color: #000000, $alpha: 0.5);
 }
 </style>
-

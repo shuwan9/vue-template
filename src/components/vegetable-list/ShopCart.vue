@@ -2,7 +2,7 @@
   <div class="shop-cart cmn-width-100">
     <div class="cmn-inline-block cmn-width-70" @click="openCart">
       <q-icon ref="cart" name="mdi-cart-plus" class="icon-cart" />
-      <span class="cmn-text-align-center num">{{ num || "100" }}</span>
+      <span class="cmn-text-align-center num">{{ num || '100' }}</span>
     </div>
     <div class="cmn-inline-block cmn-width-30 cmn-text-align-center">
       <span class="cmn-text-align-center">确认下单</span>
@@ -19,43 +19,43 @@
   </div>
 </template>
 <script>
-import Vue from "vue";
-import BackDrop from "./BackDrop.vue";
+import Vue from 'vue'
+import BackDrop from './BackDrop.vue'
 export default {
   data() {
     return {
       open: false,
       backDrop: null
-    };
+    }
   },
   methods: {
     openCart() {
-      const self = this;
-      this.open = !this.open;
+      const self = this
+      this.open = !this.open
       if (!this.backDrop) {
-        let node = document.createElement("div");
-        document.querySelector("body").appendChild(node);
-        const A = Vue.extend(BackDrop);
-        this.backDrop = new A({
+        let node = document.createElement('div')
+        let body = document.querySelector('body')
+        body.appendChild(node)
+        const BD = Vue.extend(BackDrop)
+        this.backDrop = new BD({
           methods: {
             close() {
-              this.show = false;
-              self.open = false;
+              this.show = false
+              self.open = false
             }
           }
-        }).$mount(node);
+        }).$mount(node)
       }
-      this.backDrop.show = this.open;
+      this.backDrop.show = this.open
     }
   },
   mounted() {
-    console.log("mounted");
-    console.log(BackDrop.render.toString());
+    console.log('mounted')
   },
   destroyed() {
-    console.log("destroyed");
+    this.backDrop = null
   }
-};
+}
 </script>
 
 <style lang="scss">
@@ -100,4 +100,3 @@ export default {
   }
 }
 </style>
-

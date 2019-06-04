@@ -44,6 +44,13 @@ const routes = [
         }
       }
     ]
+  },
+  {
+    path: '/vegetable/orderDetail',
+    component: () => import('../views/vegetable/OrderDetail.vue'),
+    meta: {
+      title: '菜品订单详情'
+    }
   }
 ]
 
