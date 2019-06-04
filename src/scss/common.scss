@@ -1,16 +1,30 @@
-.cmn-center {
+.s-c {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
 }
-.cmn-middle {
+
+.s-m {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
 }
-.cmn-center-middle {
+
+.s-c-m {
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+}
+
+.s-a-l {
+  text-align: left;
+}
+
+.s-a-c {
+  text-align: center;
+}
+
+.s-a-r {
+  text-align: right;
 }
