@@ -1,5 +1,8 @@
 <template>
-  <div class="login">this is login</div>
+  <div class="login">
+    this is login
+    <el-button icon="el-icon-search" circle></el-button>
+  </div>
 </template>
 
 <script>

@@ -19,7 +19,8 @@ module.exports = {
       vue: "Vue",
       "vue-router": "VueRouter",
       vuex: "Vuex",
-      axios: "axios"
+      axios: "axios",
+      "element-ui": "ELEMENT"
     }
   }
 }
