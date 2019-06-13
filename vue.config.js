@@ -20,7 +20,7 @@ module.exports = {
       "vue-router": "VueRouter",
       vuex: "Vuex",
       axios: "axios",
-      "muse-ui": "MuseUI"
+      "mand-mobile": "MandMobile"
     }
   }
 }
