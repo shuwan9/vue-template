@@ -3,6 +3,7 @@
     <login-bg></login-bg>
     <login-form></login-form>
     <login-submit></login-submit>
+    <button @click="$router.push('/home')">login</button>
   </div>
 </template>
 
