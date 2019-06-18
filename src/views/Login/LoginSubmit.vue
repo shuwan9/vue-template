@@ -1,0 +1,97 @@
+<template>
+  <div class="login-submit s-a-c">
+    <div>
+      <md-button type="primary" inline size="small" @click="startLogin">
+        <span v-show="!loging">立&nbsp;即&nbsp;登&nbsp;录</span>
+        <md-activity-indicator
+          type="spinner"
+          color="light"
+          text-color="light"
+          :size="30"
+          :text-size="16"
+          v-show="loging"
+        >登录中...</md-activity-indicator>
+      </md-button>
+    </div>
+    <div class="tip s-a-l">
+      <span class>*&nbsp;</span>
+      <span class>如提示未匹配到信息，请确认手机号和姓名是否正确或前往物业进行信息登记！</span>
+    </div>
+  </div>
+</template>
+
+<script>
+import { mapState } from "vuex";
+import { Toast } from "mand-mobile";
+import { checkUsername, checkMobile } from "@/util/check";
+const checkLogin = (username, mobile, loging) => {
+  if (!checkUsername(username)) {
+    Toast.failed("请填写用户名");
+    return false;
+  }
+  if (!checkMobile(mobile)) {
+    Toast.failed("请填写格式正确的手机号");
+    return false;
+  }
+  if (loging) {
+    return false;
+  }
+  return true;
+};
+export default {
+  data() {
+    return {
+      loging: false
+    };
+  },
+  methods: {
+    startLogin() {
+      const { loging } = this;
+      const { username, mobile } = this.login;
+      if (!checkLogin(username, mobile, loging)) {
+        console.log("can't login");
+        return;
+      }
+      console.log(username, mobile);
+      this.loging = true;
+    }
+  },
+  computed: {
+    ...mapState(["login"])
+  }
+};
+</script>
+
+<style lang="scss">
+.login-submit.s-a-c {
+  margin-top: 50px;
+  .md-activity-indicator-text {
+    color: #fff;
+  }
+  .md-button {
+    font-size: 16px;
+    height: 48px;
+    line-height: 48px;
+    width: 80%;
+    border-radius: 10px;
+    overflow: hidden;
+    background: linear-gradient(
+      90deg,
+      rgba(67, 115, 236, 1),
+      rgba(63, 157, 244, 1)
+    );
+  }
+  .tip {
+    margin: 20px auto;
+    margin-top: 30px;
+    font-size: 14px;
+    width: 90%;
+    color: #c2c2c2;
+    span {
+      &:nth-child(1) {
+        color: #e43b3b;
+      }
+    }
+  }
+}
+</style>

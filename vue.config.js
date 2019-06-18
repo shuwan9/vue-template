@@ -22,5 +22,6 @@ module.exports = {
       axios: "axios",
       "mand-mobile": "MandMobile"
     }
-  }
+  },
+  productionSourceMap: false
 }
