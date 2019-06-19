@@ -1,20 +1,18 @@
 <template>
   <div class="login">
-    <login-bg></login-bg>
-    <login-form></login-form>
+    <Bg></Bg>
+    <Form></Form>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import LoginBg from "./LoginBg";
-import LoginForm from "./LoginForm";
-import LoginSubmit from "./LoginSubmit";
+import Bg from "./Bg";
+import Form from "./Form";
 export default {
   components: {
-    LoginBg,
-    LoginForm,
-    LoginSubmit
+    Bg,
+    Form
   }
 };
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="login-bg">
+  <div class="bg">
     <img src="@/assets/bg.png" alt>
   </div>
 </template>
@@ -9,9 +9,11 @@ export default {};
 </script>
 
 <style lang="scss">
-.login-bg {
-  img {
-    width: 100%;
+.login {
+  .bg {
+    img {
+      width: 100%;
+    }
   }
 }
 </style>

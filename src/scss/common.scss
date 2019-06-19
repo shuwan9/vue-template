@@ -32,5 +32,12 @@
 .inline {
   vertical-align: middle;
   display: inline-block;
+  text-align: center;
   font-size: 16px;
+}
+
+.text-over-flow {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }

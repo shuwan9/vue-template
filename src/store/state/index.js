@@ -3,6 +3,16 @@ const login = {
   mobile: ""
 }
 
+const carts = {
+  shushi: [],
+  jingcai: [],
+  nongchanping: [],
+  dangao: []
+}
+const currentMenu = "shushi"
+
 export default {
-  login
+  login,
+  carts,
+  currentMenu
 }
