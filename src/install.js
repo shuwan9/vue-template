@@ -14,6 +14,7 @@ const install = () => {
   Vue.use(MandMobile)
 
   Vue.use(Ls)
+
   return Vue
 }
 

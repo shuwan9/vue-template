@@ -23,5 +23,8 @@ module.exports = {
       "mand-mobile": "MandMobile"
     }
   },
-  productionSourceMap: false
+  productionSourceMap: false,
+  devServer: {
+    port: 8080
+  }
 }

@@ -15,24 +15,30 @@ export default {};
 <style lang="scss">
 .order {
   .search {
-    padding: 5px 15px;
+    padding: 5px 5px;
     text-align: center;
     .md-field-item {
-      width: 60%;
-      padding: 0 15px;
-      border-radius: 10px;
+      width: 65vw;
+      padding: 0 5px;
+      border-radius: 4px;
       display: inline-block;
       vertical-align: middle;
-      margin-right: 15px;
+      margin-right: 5px;
       border: 1px solid #ccc;
       .md-field-item-content {
         min-height: auto;
+        .iconfont {
+          color: #ccc;
+        }
         .md-input-item-input {
           vertical-align: middle;
-          height: 40px;
-          line-height: 40px;
-          font-size: 16px;
+          height: 28px;
+          line-height: 28px;
+          font-size: 12px;
         }
+      }
+      .md-field-item-content:before {
+        border: none;
       }
     }
     button {
@@ -42,7 +48,7 @@ export default {};
       padding: 10px 15px;
       outline: none;
       border: none;
-      font-size: 16px;
+      font-size: 12px;
     }
   }
 }

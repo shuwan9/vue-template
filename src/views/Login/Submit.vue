@@ -23,14 +23,18 @@
 <script>
 import { mapState } from "vuex";
 import { Toast } from "mand-mobile";
-import { checkUsername, checkMobile } from "@/util/check";
-const checkLogin = (username, mobile, loading) => {
+import { checkUsername, checkMobile, checkCaptcha } from "@/util/check";
+const checkLogin = (username, mobile, captcha, loading) => {
   if (!checkUsername(username)) {
-    Toast.failed("请填写用户名");
+    Toast.failed("请填写用户名", 1500);
     return false;
   }
   if (!checkMobile(mobile)) {
-    Toast.failed("请填写格式正确的手机号");
+    Toast.failed("请填写格式正确的手机号", 1500);
+    return false;
+  }
+  if (!checkCaptcha(captcha)) {
+    Toast.failed("请填写验证码", 1500);
     return false;
   }
   if (loading) {
@@ -47,12 +51,23 @@ export default {
   methods: {
     startLogin() {
       const { loading } = this;
-      const { username, mobile } = this.login;
-      if (!checkLogin(username, mobile, loading)) {
+      const { username, mobile, captcha } = this.login;
+      if (!checkLogin(username, mobile, captcha, loading)) {
         return;
       }
       this.loading = true;
-      this.$router.push("/order/dish");
+      const data = {
+        content: JSON.stringify({
+          phone: mobile,
+          verificationCode: captcha
+        })
+      };
+      this.$http.login(data).then(res => {
+        this.loading = false;
+        this.$ls.set("user", res.data.data);
+        const toPath = this.$ls.get("toPath");
+        this.$router.push(toPath ? toPath : "/order/dish");
+      });
     }
   },
   computed: {
@@ -64,7 +79,7 @@ export default {
 <style lang="scss">
 .login {
   .submit {
-    margin-top: 50px;
+    margin-top: 20px;
     .md-activity-indicator-text {
       color: #fff;
     }

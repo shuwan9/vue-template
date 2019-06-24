@@ -9,6 +9,12 @@
     <div class="input">
       <md-input-item placeholder="请输入手机号" v-model="login.mobile">
         <i slot="left" class="iconfont iconziyuan"></i>
+        <span slot="right" class="captcha" :class="timer?'sended':''" @click="getCaptcha()">{{tip}}</span>
+      </md-input-item>
+    </div>
+    <div class="input">
+      <md-input-item placeholder="请输入验证码" v-model="login.captcha">
+        <i slot="left" class="iconfont iconyanzhengma"></i>
       </md-input-item>
     </div>
     <Submit></Submit>
@@ -19,11 +25,36 @@
 import { mapState } from "vuex";
 import Submit from "./Submit.vue";
 export default {
+  data() {
+    return {
+      tip: "获取验证码",
+      timer: null
+    };
+  },
   components: {
     Submit
   },
   computed: {
     ...mapState(["login"])
+  },
+  methods: {
+    getCaptcha() {
+      if (this.timer) {
+        return;
+      }
+      let total = 10;
+      this.tip = `(${total})秒后重新发送`;
+      this.timer = setInterval(() => {
+        total--;
+        if (total == -1) {
+          clearInterval(this.timer);
+          this.timer = null;
+          this.tip = "获取验证码";
+        } else {
+          this.tip = `(${("0" + total).slice(-2)})秒后重新发送`;
+        }
+      }, 1000);
+    }
   }
 };
 </script>
@@ -50,6 +81,13 @@ export default {
       padding: 20px 0;
       .iconfont {
         font-size: 25px;
+      }
+      .captcha {
+        font-size: 12px;
+        color: #4373ec;
+        &.sended {
+          color: #888;
+        }
       }
       .md-field-item-content {
         min-height: auto;

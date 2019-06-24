@@ -22,16 +22,19 @@ export default {
 <style lang="scss">
 .order {
   .md-swiper {
-    height: 25vh;
+    height: 20vh;
     .md-swiper-item {
       text-align: center;
       img {
         width: 100%;
       }
     }
+    .md-swiper-indicators {
+      bottom: 5px;
+    }
     .md-swiper-indicator {
-      width: 10px;
-      height: 10px;
+      width: 5px;
+      height: 5px;
       border-radius: 50%;
       background-color: #fff;
       opacity: 0.4;

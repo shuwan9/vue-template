@@ -12,8 +12,8 @@ export default {};
 <style lang="scss">
 .order {
   .tab {
-    height: 8vh;
-    line-height: 8vh;
+    height: 5vh;
+    line-height: 5vh;
     text-align: center;
     font-size: 0;
     padding: 0 10%;
@@ -22,7 +22,7 @@ export default {};
       vertical-align: middle;
       width: 40%;
       text-align: center;
-      font-size: 18px;
+      font-size: 14px;
       color: #333;
       text-decoration: none;
       position: relative;
@@ -36,7 +36,7 @@ export default {};
           background-color: rgba(67, 115, 236, 1);
           position: absolute;
           left: 50%;
-          bottom: 5px;
+          bottom: 1px;
           transform: translateX(-50%);
         }
       }

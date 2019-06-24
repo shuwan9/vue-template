@@ -22,9 +22,17 @@ const Order = {
     },
     {
       path: "list",
-      component: () => import("@/views/List")
+      component: () => import("@/views/OrderList")
     }
   ]
 }
+const DishDetail = {
+  path: "/dishdetail",
+  component: () => import("@/views/DishDetail")
+}
+const ToOrder = {
+  path: "/toOrder",
+  component: () => import("@/views/ToOrder")
+}
 
-export default [_default, Login, Home, Order]
+export default [_default, Login, Home, Order, DishDetail, ToOrder]

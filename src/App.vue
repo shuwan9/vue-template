@@ -8,5 +8,6 @@
 #app {
   height: 100vh;
   overflow: hidden;
+  font-size: 14px;
 }
 </style>

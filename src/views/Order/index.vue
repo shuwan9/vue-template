@@ -3,7 +3,7 @@
     <Carousel></Carousel>
     <Tab></Tab>
     <router-view id="order"></router-view>
-    <Cart></Cart>
+    <!-- <Cart></Cart> -->
   </div>
 </template>
 
@@ -23,7 +23,7 @@ export default {
 <style lang="scss">
 .order {
   #order {
-    height: 67vh;
+    height: 75vh;
     position: relative;
   }
 }

@@ -1,3 +1,71 @@
 .md-toast-content {
+  font-size: 16px;
+}
+
+.md-dialog-content {
+  width: 100%;
+
+  .md-dialog-body {
     font-size: 16px;
+    padding: 20px 40px;
+  }
+
+  .md-dialog-actions {
+    .md-dialog-btn {
+      font-size: 16px;
+      height: 40px;
+    }
+  }
+}
+
+.md-button.primary:after {
+  border: none;
+}
+
+.md-button.default:after {
+  border: none;
+}
+
+.md-date-picker.custom {
+  font-size: 14px;
+  overflow: hidden;
+
+  .md-popup-box.md-slide-up {
+    .md-popup-title-bar {
+      height: 40px;
+      line-height: 40px;
+
+      .title,
+      .title-bar-left.md-popup-cancel,
+      .title-bar-right.md-popup-confirm {
+        font-size: 14px;
+      }
+    }
+  }
+
+  .md-picker-column-item .column-list .column-item {
+    padding: 0 5px;
+  }
+
+  .column-list {
+    padding-left: 10px;
+  }
+}
+
+.md-date-picker .column-item {
+  font-size: 12px !important;
+}
+
+.md-picker-column-masker.top {
+  left: 0;
+  right: 0;
+  top: 20px;
+  width: 100vw;
+}
+
+.md-picker-column-masker.bottom {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
 }

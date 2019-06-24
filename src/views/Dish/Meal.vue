@@ -1,29 +1,33 @@
 <template>
   <div class="meal">
     <div class="inline">
-      <img :src="meal.imgUrl">
+      <img :src="meal.layoutOfDishes">
     </div>
     <div class="inline">
       <div class="detail">
-        <span class="name inline">{{meal.name}}</span>
+        <span class="name inline">{{meal.nameOfDish}}</span>
         <span class="num inline">
           剩余&nbsp;
-          <span>{{meal.num}}</span>
+          <span>{{meal.number-meal.hasAddNumber>=0?meal.number-meal.hasAddNumber:0}}</span>
           &nbsp;份
         </span>
       </div>
       <div class="detail text-over-flow">
-        <span>{{meal.desc}}</span>
+        <span>{{meal.descriptionOfDishes}}</span>
       </div>
       <div class="detail">
         <span class="price inline">
           <span>
             ￥
-            {{meal.price}}
+            {{meal.price/100}}
           </span>
         </span>
-        <span class="inline">
-          <i class="iconfont iconadd" @click="add(meal)"></i>
+        <span class="inline" @click="add($event,meal)">
+          <i
+            class="iconfont iconadd"
+            ref="ballContainer"
+            :class="meal.number==meal.hasAddNumber?'sold':''"
+          ></i>
         </span>
       </div>
     </div>
@@ -31,21 +35,23 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import { mapState, mapMutations } from "vuex";
+import Bus from "@/plugins/Bus";
 export default {
   props: ["meal"],
   methods: {
-    add(meal) {
-      if (meal.num == 0) {
+    add(event, meal) {
+      event.stopPropagation();
+      if (meal.number <= meal.hasAddNumber) {
         return;
       }
-      meal.num--;
-      this.addToCarts({
-        menu: "shushi",
-        meal
-      });
+      this.addToCart(meal);
+      Bus.$emit("startBallAnimation", this.$refs.ballContainer);
     },
-    ...mapMutations(["addToCarts"])
+    ...mapMutations(["addToCart"])
+  },
+  computed: {
+    ...mapState(["dishType"])
   }
 };
 </script>
@@ -81,8 +87,11 @@ export default {
           width: 50%;
           .iconfont {
             color: #4373ec;
-            font-size: 25px;
+            font-size: 20px;
             vertical-align: top;
+            &.sold {
+              color: #888;
+            }
           }
           &.name {
             font-weight: 400;

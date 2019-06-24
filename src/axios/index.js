@@ -1,1 +1,3 @@
-import instance from './instance'
+import $http from "./$http"
+
+export default $http

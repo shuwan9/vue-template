@@ -1,74 +1,98 @@
 <template>
   <div class="meal-list">
+    <div class="tip" v-if="meals.length==0">暂无菜品</div>
     <md-scroll-view
       class="scroll-view"
       ref="scrollView"
+      :immediate-check-end-reaching="true"
+      :bouncing="true"
+      :manual-init="true"
       :scrolling-x="false"
+      :auto-reflow="true"
       @endReached="$_onEndReached"
+      v-if="meals.length>0"
     >
-      <Meal v-for="(meal,index) in meals" :key="index" :meal="meal"></Meal>
-      <md-scroll-view-more slot="more" :is-finished="isFinished" v-show="!isFinished"></md-scroll-view-more>
+      <Meal
+        v-for="(meal,index) in meals"
+        :key="index"
+        :meal="meal"
+        @click.native="showDishDetail(meal)"
+      ></Meal>
+      <md-scroll-view-more
+        slot="more"
+        :is-finished="isFinished"
+        loading-text="加载中..."
+        finished-text="没有更多啦"
+      ></md-scroll-view-more>
     </md-scroll-view>
   </div>
 </template>
 
 <script>
-import imgUrl from "@/assets/meal.png";
+import { mapState, mapMutations } from "vuex";
 import Meal from "./Meal";
+let pageSize = 5;
+let pageCurrent = 1;
 export default {
   data() {
     return {
-      meals: [
-        {
-          imgUrl,
-          name: "糖醋里脊",
-          num: 2,
-          desc: "以猪里脊肉为主材，配以面粉、淀dfshjkdfhgjkdfghjdfhgjdfhgdhgdf",
-          price: 22
-        },
-        {
-          imgUrl,
-          name: "糖醋里脊",
-          num: 30,
-          desc: "以猪里脊肉为主材，配以面粉、淀dfshjkdfhgjkdfghjdfhgjdfhgdhgdf",
-          price: 22
-        },
-        {
-          imgUrl,
-          name: "糖醋里脊",
-          num: 30,
-          desc: "以猪里脊肉为主材，配以面粉、淀dfshjkdfhgjkdfghjdfhgjdfhgdhgdf",
-          price: 22
-        },
-        {
-          imgUrl,
-          name: "糖醋里脊",
-          num: 30,
-          desc: "以猪里脊肉为主材，配以面粉、淀dfshjkdfhgjkdfghjdfhgjdfhgdhgdf",
-          price: 22
-        }
-      ],
-      list: 10,
+      meals: [],
       isFinished: false
     };
   },
   methods: {
+    showDishDetail(meal) {
+      this.$ls.set("meal", meal);
+      this.$router.push("/dishdetail");
+    },
+    getMeals(fn) {
+      const { key } = this.dishType;
+      this.$http.getMeals(key, pageSize, pageCurrent).then(res => {
+        const { list, hasNextPage } = res.data.data;
+        list.forEach(meal => {
+          meal.hasAddNumber = 0;
+          // meal.layoutOfDishes =
+          //   "https://img.yzcdn.cn/upload_files/2018/10/18/Fs4cCQpfNJjLk607YVuxhxayc8fr.jpg?imageView2/2/w/580/h/580/q/75/format/jpg";
+        });
+        this.meals = this.meals.concat(list);
+        this.isFinished = !hasNextPage;
+        this.updateMeals(this.meals);
+        this.$nextTick(() => {
+          if (this.$refs.scrollView) {
+            this.$refs.scrollView.init();
+            fn && fn(hasNextPage);
+          }
+        });
+      });
+    },
     $_onEndReached() {
       if (this.isFinished) {
         return;
       }
-      // async data
-      setTimeout(() => {
-        this.meals = this.meals.concat(this.meals);
-        if (this.meals.length >= 20) {
-          this.isFinished = true;
-        }
+      pageCurrent++;
+      this.getMeals(() => {
         this.$refs.scrollView.finishLoadMore();
-      }, 1000);
+      });
+    },
+    ...mapMutations(["updateMeals"])
+  },
+  watch: {
+    dishType(newVal) {
+      this.meals = [];
+      this.isFinished = false;
+      pageCurrent = 1;
+      this.getMeals();
     }
   },
   components: {
     Meal
+  },
+  computed: {
+    ...mapState(["dishType"])
+  },
+  mounted() {
+    pageCurrent = 1;
+    this.getMeals();
   }
 };
 </script>
@@ -76,13 +100,23 @@ export default {
 <style lang="scss">
 .order {
   .meal-list {
-    height: calc(68vh - 52px - 105px - 55px);
+    height: calc(75vh - 43px - 70px - 45px);
     overflow: auto;
+    border-top: 1px solid #cecece;
+    .tip {
+      height: 200px;
+      line-height: 200px;
+      text-align: center;
+      font-size: 14px;
+      color: #333;
+    }
     .scroll-view {
-      height: 100%;
+      height: calc(75vh - 43px - 70px - 45px);
+      display: flex;
+      flex-direction: column;
       .md-scroll-view-more {
         padding: 0;
-        font-size: 16px;
+        font-size: 12px;
       }
     }
   }

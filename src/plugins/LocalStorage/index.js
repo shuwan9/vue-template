@@ -32,4 +32,4 @@ const install = (Vue, options) => {
   }
 }
 
-export default { install }
+export default { install, set, get }

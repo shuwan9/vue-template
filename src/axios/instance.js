@@ -1,6 +1,6 @@
 import axios from "axios"
 
-import { baseURL, headers, transformRequest } from "@/axios/config"
+import { baseURL, headers, transformRequest } from "./config"
 
 const instance = axios.create({
   baseURL,
