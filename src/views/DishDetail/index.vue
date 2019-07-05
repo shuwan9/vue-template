@@ -42,6 +42,9 @@ export default {
       this.$router.push("/order/dish");
     },
     add() {
+      if (this.meal.hasAddNumber == this.meal.number) {
+        return;
+      }
       this.updateMeals([this.meal]);
       this.addToCart(this.meal);
     },

@@ -4,10 +4,11 @@ import Ls from "@/plugins/LocalStorage/index"
 
 import { isFile } from "@/util/type"
 
-// const baseURL = "https://httpbin.org"
-// const baseURL = "http://192.168.4.11:8099/wx"
-const baseURL = "http://192.168.4.203:8099/wx"
-// const baseURL = "http://192.168.4.7:8099/wx"
+const devBaseUrl = "http://192.168.4.203:8099/wx"
+
+const prodBaseUrl = "http://121.40.195.52:8099/wx"
+
+const baseURL = process.env.NODE_ENV == "development" ? devBaseUrl : prodBaseUrl
 
 const getToken = () => {
   const user = Ls.get("user")

@@ -1,7 +1,7 @@
 <template>
   <div class="meal-info">
     <div class="meal-list">
-      <div v-for="meal in meals" :key="meal.id" class="meal">
+      <div v-for="meal in meals" :key="meal.id" class="meal" v-show="meal.hasAddNumber>0">
         <div class="inline">
           <img :src="meal.layoutOfDishes" alt>
         </div>

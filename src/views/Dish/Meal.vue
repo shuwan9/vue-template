@@ -22,11 +22,19 @@
             {{meal.price/100}}
           </span>
         </span>
-        <span class="inline" @click="add($event,meal)">
+        <span class="inline" @click="stop($event)">
+          <transition name="rotate-in">
+            <i
+              class="iconfont iconMinuswithcircle"
+              v-if="meal.hasAddNumber"
+              @click="minus($event,meal)>0"
+            ></i>
+          </transition>
           <i
             class="iconfont iconadd"
             ref="ballContainer"
             :class="meal.number==meal.hasAddNumber?'sold':''"
+            @click="add($event,meal)"
           ></i>
         </span>
       </div>
@@ -48,6 +56,15 @@ export default {
       this.addToCart(meal);
       Bus.$emit("startBallAnimation", this.$refs.ballContainer);
     },
+    minus(event, meal) {
+      event.stopPropagation();
+      if (meal.hasAddNumber > 0) {
+        meal.hasAddNumber--;
+      }
+    },
+    stop(e) {
+      e.stopPropagation();
+    },
     ...mapMutations(["addToCart"])
   },
   computed: {
@@ -57,10 +74,32 @@ export default {
 </script>
 
 <style lang="scss">
+.rotate-in-enter {
+  transform: translateY(-50%) rotate(360deg) !important;
+  right: 20% !important;
+}
+.rotate-in-enter-active {
+  transform: translateY(-50%) rotate(360deg) !important;
+  right: 20% !important;
+}
+.rotate-in-enter-to {
+  transform: translateY(-50%) rotate(0) !important;
+  right: 60% !important;
+}
+.rotate-in-leave {
+  right: 60% !important;
+}
+.rotate-in-leave-active {
+  right: 60% !important;
+}
+.rotate-in-leave-to {
+  right: 20% !important;
+}
 .order {
   .meal {
     font-size: 0;
     padding: 5px;
+    border-bottom: 1px solid #ededed;
     > .inline {
       font-size: 12px;
       &:nth-child(1) {
@@ -85,6 +124,18 @@ export default {
         }
         .inline {
           width: 50%;
+          position: relative;
+          min-height: 20px;
+          .iconfont {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 20%;
+          }
+          .iconMinuswithcircle {
+            right: 60%;
+            transition: all 0.5s ease-out;
+          }
           .iconfont {
             color: #4373ec;
             font-size: 20px;

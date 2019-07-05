@@ -1,7 +1,15 @@
 const login = {
-  username: "shuwang",
-  mobile: "18762750392",
-  captcha: "123456"
+  // username: "shuwang",
+  // mobile: "18762750392",
+  // captcha: "123456"
+  username: process.env.NODE_ENV == "development" ? "疏旺" : "",
+  mobile: process.env.NODE_ENV == "development" ? "18762750392" : "",
+  captcha: process.env.NODE_ENV == "development" ? "576961" : ""
+}
+
+const search = {
+  name: "",
+  name2: ""
 }
 
 const dishTypes = [
@@ -28,18 +36,23 @@ const carts = dishTypes.map(item => {
   return item
 })
 
+const supermarketCart = []
+
 const dishType = {
   label: "熟食",
   key: "1"
 }
 const show = {
-  showCartDetail: false
+  showCartDetail: false,
+  showSupermarketCartDetail: false
 }
 
 export default {
   login,
+  search,
   carts,
   dishType,
   dishTypes,
-  show
+  show,
+  supermarketCart
 }

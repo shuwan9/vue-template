@@ -62,12 +62,16 @@ export default {
           verificationCode: captcha
         })
       };
-      this.$http.login(data).then(res => {
-        this.loading = false;
-        this.$ls.set("user", res.data.data);
-        const toPath = this.$ls.get("toPath");
-        this.$router.push(toPath ? toPath : "/order/dish");
-      });
+      this.$http
+        .login(data, () => {
+          this.loading = false;
+        })
+        .then(res => {
+          this.loading = false;
+          this.$ls.set("user", res.data.data);
+          const toPath = this.$ls.get("toPath");
+          this.$router.replace(toPath ? toPath : "/order/dish");
+        });
     }
   },
   computed: {

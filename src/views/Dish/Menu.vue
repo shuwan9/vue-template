@@ -76,7 +76,8 @@ export default {
         text-align: center;
         vertical-align: middle;
         position: relative;
-        opacity: 0.5;
+        color: #888;
+        // opacity: 0.5;
         .iconfont {
           color: #fff;
           font-size: 20px;

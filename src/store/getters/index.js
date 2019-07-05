@@ -15,6 +15,12 @@ const getters = {
       return cart.key == dishType.key && cart.label == dishType.label
     })[0]
     return cart.meals
+  },
+  supermarketCartTotal(state) {
+    const total = state.supermarketCart.reduce((total, item) => {
+      return total + (item.price * item.hasAddNumber) / 100
+    }, 0)
+    return total > 99 ? "..." : total
   }
 }
 

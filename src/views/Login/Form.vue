@@ -23,6 +23,7 @@
 
 <script>
 import { mapState } from "vuex";
+import { Toast } from "mand-mobile";
 import Submit from "./Submit.vue";
 export default {
   data() {
@@ -38,11 +39,33 @@ export default {
     ...mapState(["login"])
   },
   methods: {
+    getSendCodeData() {
+      return {
+        content: JSON.stringify({
+          name: this.login.username,
+          phone: this.login.mobile
+        })
+      };
+    },
     getCaptcha() {
       if (this.timer) {
         return;
       }
-      let total = 10;
+      if (!this.login.username) {
+        Toast.failed("请输入用户名", 1500);
+        return;
+      }
+      if (!this.login.mobile) {
+        Toast.failed("请输入手机号", 1500);
+        return;
+      }
+      const data = this.getSendCodeData();
+      this.$http.sendCode(data).then(res => {
+        const { code, message } = res.data;
+        Toast.info(message, 1500);
+      });
+
+      let total = 60;
       this.tip = `(${total})秒后重新发送`;
       this.timer = setInterval(() => {
         total--;

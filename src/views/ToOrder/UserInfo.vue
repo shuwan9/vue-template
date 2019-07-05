@@ -1,9 +1,11 @@
 <template>
   <div class="user-info">
-    <div>shuwang</div>
+    <div>{{user.name}}</div>
     <div>
-      <span class="inline">18762750392</span>
+      <span class="inline">{{user.phone}}</span>
+      <span class="inline farm" v-if="dishType.key==3">农产品请于周一领取</span>
       <span
+        v-else
         class="inline"
         @click="chooseDate()"
       >{{pickMealTime?`取餐时间:&nbsp;${pickMealTime}`:'请选择取餐时间'}}</span>
@@ -24,9 +26,11 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   data() {
     return {
+      user: {},
       isDatePickerShow: false,
       currentDate: new Date(),
       pickMealTime: ""
@@ -43,6 +47,12 @@ export default {
       this.pickMealTime = datePickerValue;
       this.$emit("chooseDate", datePickerValue);
     }
+  },
+  computed: {
+    ...mapState(["dishType"])
+  },
+  mounted() {
+    this.user = this.$ls.get("user");
   }
 };
 </script>
@@ -68,6 +78,9 @@ export default {
           color: #4373ec;
           font-size: 12px;
           width: 56%;
+          &.farm {
+            color: #333;
+          }
         }
       }
     }

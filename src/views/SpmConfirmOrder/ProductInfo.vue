@@ -1,0 +1,116 @@
+<template>
+  <div class="product-info">
+    <div class="confirm-product-list">
+      <div
+        v-for="product in products"
+        :key="product.id"
+        class="product"
+        v-show="product.hasAddNumber>0"
+      >
+        <div class="inline">
+          <img :src="product.imgUrl" alt />
+        </div>
+        <div class="inline">
+          <div>
+            <span class="inline">{{product.name}}</span>
+            <span class="inline">x&nbsp;{{product.hasAddNumber}}</span>
+          </div>
+          <div>
+            <span>￥&nbsp;{{product.price*product.hasAddNumber/100}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="line"></div>
+    <div class="total-price">
+      <span class="inline">总价</span>
+      <span class="inline">￥&nbsp;{{totalPrice/100}}</span>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  props: ["products"],
+  computed: {
+    totalPrice() {
+      return this.products.reduce((total, product) => {
+        return total + product.price * product.hasAddNumber;
+      }, 0);
+    }
+  }
+};
+</script>
+
+<style lang="scss">
+.spm-confirm-order {
+  .product-info {
+    background-color: #fff;
+    margin: 5px 15px;
+    padding: 5px 10px;
+    .confirm-product-list {
+      max-height: 50vh;
+      overflow: auto;
+      .product {
+        padding: 5px 0;
+        font-size: 0px;
+        > .inline {
+          font-size: 14px;
+          box-sizing: border-box;
+          // max-height: 80px;
+          overflow: hidden;
+          &:nth-child(1) {
+            width: 30%;
+            text-align: center;
+            img {
+              width: 90%;
+              border-radius: 3px;
+            }
+          }
+          &:nth-child(2) {
+            width: 70%;
+            text-align: left;
+            padding: 0 10px;
+            position: relative;
+            > div {
+              padding: 8px 0;
+              &:nth-child(1) {
+                font-size: 0px;
+                .inline {
+                  font-size: 14px;
+                  width: 50%;
+                  text-align: left;
+                  &:nth-child(2) {
+                    text-align: right;
+                  }
+                }
+              }
+              &:nth-child(2) {
+                color: #e12525;
+                font-size: 14px;
+              }
+            }
+          }
+        }
+      }
+    }
+    .line {
+      margin-top: 10px;
+      border-bottom: 1px solid #cecece;
+    }
+    .total-price {
+      padding: 10px 10px;
+      font-size: 0;
+      .inline {
+        font-size: 14px;
+        width: 50%;
+        text-align: left;
+        &:nth-child(2) {
+          text-align: right;
+          color: #e12525;
+        }
+      }
+    }
+  }
+}
+</style>

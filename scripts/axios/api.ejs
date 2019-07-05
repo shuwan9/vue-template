@@ -1,0 +1,26 @@
+import send from <%- sendPath||"\"@/util/send\"" %>
+
+export default {
+
+<% apis.forEach(function(item){ %>
+    <%= item.module %>
+     :{     
+        <% item.apis.forEach(function(api){ %>
+            <% if(api.description){ %>
+                // <%= api.description %>
+            <% } %>
+            <%= api.name %> ( <%= api.method=='post'?'data':'params' %> )
+            { <% if (api.method == 'post') { %>
+                    return send({url:'<%=api.url %>',method:'post',data})
+                <% } else if (api.method == 'get') { %>
+                    return send({url:'<%=api.url %>',method:'get',params})
+                <% } else { %>
+                    return send({url:'<%=api.url %>',method:'<%=api.method %>'})
+                <% } %>
+            },
+        <% }) %>
+        },
+
+<% }) %> 
+
+}

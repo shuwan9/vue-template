@@ -2,18 +2,24 @@ import "@/scss/index.scss"
 
 import install from "@/install"
 
-const Vue = install()
-
 import $http from "@/axios"
 
-Vue.prototype.$http = $http
-
+import filters from "@/filters"
 import router from "@/router"
 import store from "@/store"
 
 import App from "@/App.vue"
 
+const Vue = install()
+
+Vue.prototype.$http = $http
+
+Object.keys(filters).forEach(filter => {
+  Vue.filter(filter, filters[filter])
+})
+
 Vue.config.productionTip = false
+Vue.config.devtools = true
 
 const app = new Vue({
   router,

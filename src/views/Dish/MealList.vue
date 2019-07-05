@@ -30,6 +30,7 @@
 
 <script>
 import { mapState, mapMutations } from "vuex";
+import Bus from "@/plugins/Bus";
 import Meal from "./Meal";
 let pageSize = 5;
 let pageCurrent = 1;
@@ -47,12 +48,18 @@ export default {
     },
     getMeals(fn) {
       const { key } = this.dishType;
-      this.$http.getMeals(key, pageSize, pageCurrent).then(res => {
+      const data = {
+        content: JSON.stringify({
+          dishType: key,
+          nameOfDish: this.search.name
+        }),
+        pageCurrent,
+        pageSize
+      };
+      this.$http.getMeals(data).then(res => {
         const { list, hasNextPage } = res.data.data;
         list.forEach(meal => {
           meal.hasAddNumber = 0;
-          // meal.layoutOfDishes =
-          //   "https://img.yzcdn.cn/upload_files/2018/10/18/Fs4cCQpfNJjLk607YVuxhxayc8fr.jpg?imageView2/2/w/580/h/580/q/75/format/jpg";
         });
         this.meals = this.meals.concat(list);
         this.isFinished = !hasNextPage;
@@ -74,6 +81,12 @@ export default {
         this.$refs.scrollView.finishLoadMore();
       });
     },
+    startSearch() {
+      this.meals = [];
+      this.isFinished = false;
+      pageCurrent = 1;
+      this.getMeals();
+    },
     ...mapMutations(["updateMeals"])
   },
   watch: {
@@ -88,11 +101,14 @@ export default {
     Meal
   },
   computed: {
-    ...mapState(["dishType"])
+    ...mapState(["dishType", "search"])
   },
   mounted() {
     pageCurrent = 1;
     this.getMeals();
+    Bus.$on("startSearch", () => {
+      this.startSearch();
+    });
   }
 };
 </script>
@@ -102,7 +118,7 @@ export default {
   .meal-list {
     height: calc(75vh - 43px - 70px - 45px);
     overflow: auto;
-    border-top: 1px solid #cecece;
+    border-top: 1px solid #ededed;
     .tip {
       height: 200px;
       line-height: 200px;
@@ -115,7 +131,7 @@ export default {
       display: flex;
       flex-direction: column;
       .md-scroll-view-more {
-        padding: 0;
+        padding: 5px 0;
         font-size: 12px;
       }
     }

@@ -1,15 +1,34 @@
 <template>
   <div class="search">
-    <md-input-item placeholder="请输入关键词">
+    <md-input-item placeholder="请输入关键词" v-model="search.name">
       <i slot="left" class="iconfont iconsousuo"></i>
-      <i slot="right" class="iconfont iconclear"></i>
+      <i slot="right" class="iconfont iconclear" @click="clearName()"></i>
     </md-input-item>
-    <button>搜&nbsp;索</button>
+    <button @click="startSearch()">搜&nbsp;索</button>
   </div>
 </template>
 
 <script>
-export default {};
+import { mapState, mapMutations } from "vuex";
+import Bus from "@/plugins/Bus";
+export default {
+  data() {
+    return {};
+  },
+  computed: {
+    ...mapState(["search"])
+  },
+  methods: {
+    ...mapMutations(["clearSearchName"]),
+    clearName() {
+      this.clearSearchName();
+      this.startSearch();
+    },
+    startSearch() {
+      Bus.$emit("startSearch");
+    }
+  }
+};
 </script>
 
 <style lang="scss">

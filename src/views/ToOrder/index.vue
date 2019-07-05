@@ -16,7 +16,10 @@ import { Toast } from "mand-mobile";
 import UserInfo from "./UserInfo";
 import MealInfo from "./MealInfo";
 import PayInfo from "./PayInfo";
-const checkPickMealDate = pickMealDate => {
+const checkPickMealDate = (pickMealDate, dishType) => {
+  if (dishType.key == 3) {
+    return true;
+  }
   if (
     pickMealDate === undefined ||
     pickMealDate === null ||
@@ -66,11 +69,13 @@ export default {
         userId: id,
         dishType: key,
         userPhone: phone,
-        mealTakingTime: new Date(this.pickMealDate).getTime(),
         dishArray,
         price,
         count
       };
+      if (this.dishType.key != 3) {
+        data.mealTakingTime = new Date(this.pickMealDate).getTime();
+      }
       return {
         content: JSON.stringify(data)
       };
@@ -78,7 +83,7 @@ export default {
     createOrder() {
       console.log(1);
       const { pickMealDate } = this;
-      if (checkPickMealDate(pickMealDate)) {
+      if (checkPickMealDate(pickMealDate, this.dishType)) {
         const content = this.getOrderContent();
         this.$http.order.createOrder(content).then(res => {
           const { code, message, data } = res.data;
@@ -86,7 +91,8 @@ export default {
             Toast.succeed(message, 1500);
             setTimeout(() => {
               this.clearCarts();
-              this.$router.push("/order/dish");
+              // this.$router.push("/order/dish");
+              this.$router.replace("/order/dish");
             }, 1500);
           } else {
             Toast.info(message, 1500);
@@ -119,7 +125,6 @@ export default {
         color: #888;
       }
       &:nth-child(2) {
-        margin-right: 10px;
         background: linear-gradient(
           -40deg,
           rgba(67, 115, 236, 1),
