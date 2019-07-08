@@ -1,7 +1,7 @@
 <template>
   <div class="order-detail">
     <user-info :order="order"></user-info>
-    <dish-info :dishs="order.dishArray" :totalPrice="order.price"></dish-info>
+    <dish-info :dishs="order.dishArray" :totalPrice="order.price" :tip-content="order.tipsContent"></dish-info>
     <div class="order-number">
       <div>
         <span>您的取餐码:</span>
@@ -72,7 +72,7 @@ export default {
           id: this.order.id
         })
       };
-      this.$http.order.complete(data).then(res => {
+      this.$http.order.completeOrder(data).then(res => {
         const { code, message } = res.data;
         if (code == 0) {
           Toast.succeed(message, 1500);

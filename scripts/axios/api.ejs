@@ -2,7 +2,7 @@ import send from <%- sendPath||"\"@/util/send\"" %>
 
 export default {
 
-<% apis.forEach(function(item){ %>
+<% apis.forEach((item)=>{ %>
     <%= item.module %>
      :{     
         <% item.apis.forEach(function(api){ %>

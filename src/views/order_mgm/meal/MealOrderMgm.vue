@@ -65,11 +65,11 @@ export default {
   data() {
     return {
       orderTypes: [
-        { key: 4, label: "未付款" },
-        { key: 5, label: "已付款" },
-        { key: 99, label: "已完成" }
+        { key: 1, label: "已付款" },
+        { key: 0, label: "未付款" },
+        { key: 2, label: "已完成" }
       ],
-      currentKey: 5,
+      currentKey: 0,
       orders: [],
       isFinished: false
     };
@@ -86,7 +86,8 @@ export default {
       const status = this.currentKey;
       return {
         content: JSON.stringify({
-          status
+          status,
+          type: 1
         }),
         pageSize,
         pageCurrent
@@ -122,10 +123,8 @@ export default {
       });
     },
     goToCarOrderStatusChange(order) {
-      Toast.info("功能待完善", 1500);
-      return;
       this.$router.push({
-        name: "car_order_status_change",
+        name: "meal_order_status_change",
         params: {
           order
         }

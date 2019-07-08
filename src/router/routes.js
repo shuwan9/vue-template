@@ -94,6 +94,11 @@ const MealOrderMgm = {
   path: "/meal_order_mgm",
   component: () => import("@/views/order_mgm/meal/MealOrderMgm")
 }
+const MealOrderStatusChange = {
+  path: "/meal_order_status_change",
+  name: "meal_order_status_change",
+  component: () => import("@/views/order_mgm/meal/MealOrderStatusChange")
+}
 const SpmOrderMgm = {
   path: "/spm_order_mgm",
   component: () => import("@/views/order_mgm/spm/SpmOrderMgm")
@@ -127,6 +132,7 @@ export default [
   SupermarketProductDetail,
   SpmConfirmOrder,
   MealOrderMgm,
+  MealOrderStatusChange,
   SpmOrderMgm,
   CarOrderMgm,
   CarOrderStatusChange,

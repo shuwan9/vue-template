@@ -8,7 +8,7 @@ ejs.renderFile("./api.ejs", { apis, sendPath: "" }, {}, (err, str) => {
     console.log(err)
   } else {
     fs.writeFile(
-      "$http.js",
+      "testhttp.js",
       prettier.format(str, { parser: "babel" }),
       {},
       err => {

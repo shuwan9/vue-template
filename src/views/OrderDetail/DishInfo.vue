@@ -1,12 +1,13 @@
 <template>
   <div class="dish-info">
     <div class="tip">
-      <span>您的订单已准备好，请在取餐时间内凭取餐码领取</span>
+      <!-- <span>您的订单已准备好，请在取餐时间内凭取餐码领取</span> -->
+      <span>{{tipContent}}</span>
     </div>
     <div class="dish-list">
       <div v-for="dish in dishs" :key="dish.id" class="dish">
         <div class="inline">
-          <img :src="dish.imgUrl" alt>
+          <img :src="dish.imgUrl" alt />
         </div>
         <div class="inline">
           <div>
@@ -52,7 +53,7 @@
 // ];
 
 export default {
-  props: ["dishs", "totalPrice"]
+  props: ["dishs", "totalPrice", "tipContent"]
 };
 </script>
 

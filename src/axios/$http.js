@@ -23,11 +23,8 @@ const send = (opts, cb) => {
       })
       .catch(err => {
         console.log(err)
-        if (cb) {
-          cb()
-        } else {
-          Toast.failed("连接服务器失败，请稍后再试", 1500)
-        }
+        Toast.failed("连接服务器失败，请稍后再试", 1500)
+        cb && cb()
       })
   })
 }
@@ -64,9 +61,23 @@ const $http = {
     detail(id) {
       return send({ url: `varietyOfDishes/view/${id}` })
     },
-    complete(data) {
+    completeOrder(data) {
       return send({
-        url: "varietyOfDishes/complete",
+        url: "varietyOfDishes/order/complete",
+        method: "post",
+        data
+      })
+    },
+    prepareComplete(data) {
+      return send({
+        url: "varietyOfDishes/order/completion",
+        method: "post",
+        data
+      })
+    },
+    confirmPay(data) {
+      return send({
+        url: "varietyOfDishes/order/payment",
         method: "post",
         data
       })
