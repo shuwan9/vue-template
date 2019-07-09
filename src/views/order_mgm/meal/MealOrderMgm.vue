@@ -135,6 +135,11 @@ export default {
     OrderType
   },
   mounted() {
+    const {roles} = this.$ls.get('user')
+    if(roles.indexOf('canteenAdmin') == -1){
+      this.$router.replace('/no_permission')
+      return
+    }
     pageCurrent = 1;
     this.getOrders();
   }

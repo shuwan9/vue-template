@@ -109,8 +109,14 @@ export default {
         const data = this.getContent();
         this.$http.car.createOrder(data).then(res => {
           const { code, data, message } = res.data;
+          // this.$router.push({
+          //   name: "confirm",
+          //   params: {
+          //     order: data
+          //   }
+          // });
           this.$router.push({
-            name: "confirm",
+            name: "orderdetail",
             params: {
               order: data
             }

@@ -103,6 +103,11 @@ const SpmOrderMgm = {
   path: "/spm_order_mgm",
   component: () => import("@/views/order_mgm/spm/SpmOrderMgm")
 }
+const SpmOrderStatusChange = {
+  path: "/spm_order_status_change",
+  name: "spm_order_status_change",
+  component: () => import("@/views/order_mgm/spm/SpmOrderStatusChange")
+}
 const CarOrderMgm = {
   path: "/car_order_mgm",
   component: () => import("@/views/order_mgm/car/CarOrderMgm")
@@ -117,6 +122,11 @@ const SpmOrderDetail = {
   path: "/spm_order_detail",
   name: "spm_order_detail",
   component: () => import("@/views/spm_order_detail/SpmOrderDetail")
+}
+
+const NoPermission = {
+  path: '/no_permission',
+  component: () => import('@/views/no_permission/NoPermission')
 }
 
 export default [
@@ -134,7 +144,9 @@ export default [
   MealOrderMgm,
   MealOrderStatusChange,
   SpmOrderMgm,
+  SpmOrderStatusChange,
   CarOrderMgm,
   CarOrderStatusChange,
-  SpmOrderDetail
+  SpmOrderDetail,
+  NoPermission
 ]

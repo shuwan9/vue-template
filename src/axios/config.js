@@ -4,9 +4,13 @@ import Ls from "@/plugins/LocalStorage/index"
 
 import { isFile } from "@/util/type"
 
-const devBaseUrl = "http://192.168.4.228:8099/wx"
+// const devBaseUrl = "http://192.168.4.228:8099/wx"
+// const devBaseUrl = "http://121.40.195.52:8081/AutoEngine/wx"
+const devBaseUrl = "http://121.40.195.52:8099/wx"
+// const devBaseUrl = "http://192.168.1.132:8099/wx"
 
 const prodBaseUrl = "http://121.40.195.52:8099/wx"
+// const prodBaseUrl = "http://121.40.195.52:8081/AutoEngine/wx"
 
 const baseURL = process.env.NODE_ENV == "development" ? devBaseUrl : prodBaseUrl
 

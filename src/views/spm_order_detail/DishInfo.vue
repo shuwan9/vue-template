@@ -1,7 +1,7 @@
 <template>
   <div class="dish-info">
     <div class="tip">
-      <span>您的订单已准备好，请在取货时间内凭取货码领取</span>
+      <span>{{tipsContent}}</span>
     </div>
     <div class="dish-list">
       <div v-for="dish in dishs" :key="dish.id" class="dish">
@@ -52,7 +52,7 @@
 // ];
 
 export default {
-  props: ["dishs", "totalPrice"]
+  props: ["dishs", "totalPrice", "tipsContent"]
 };
 </script>
 

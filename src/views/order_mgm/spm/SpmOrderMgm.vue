@@ -30,12 +30,12 @@
           </div>
           <div class="inline">{{order.createDate | timeStamp}}</div>
         </div>
-        <div>
+        <!-- <div>
           <div class="inline">
             <span>订单内容</span>
           </div>
-          <div class="inline text-over-flow">{{order.content }}</div>
-        </div>
+          <div class="inline text-over-flow">{{order.tipsContent }}</div>
+        </div>-->
         <div>
           <div class="inline">
             <span>订单状态</span>
@@ -51,7 +51,7 @@
       ></md-scroll-view-more>
     </md-scroll-view>
     <div class="tip" v-else>
-      <span>功能待完善</span>
+      <span>暂无</span>
     </div>
   </div>
 </template>
@@ -65,18 +65,17 @@ export default {
   data() {
     return {
       orderTypes: [
-        { key: 4, label: "未付款" },
-        { key: 5, label: "已付款" },
-        { key: 99, label: "已完成" }
+        { key: 1, label: "已付款" },
+        { key: 0, label: "未付款" },
+        { key: 2, label: "已完成" }
       ],
-      currentKey: 5,
+      currentKey: 0,
       orders: [],
       isFinished: false
     };
   },
   methods: {
     onChooseOrderType(orderType) {
-      return;
       this.currentKey = orderType.key;
       pageCurrent = 1;
       this.isFinished = false;
@@ -87,7 +86,8 @@ export default {
       const status = this.currentKey;
       return {
         content: JSON.stringify({
-          status
+          status,
+          type: 1
         }),
         pageSize,
         pageCurrent
@@ -95,12 +95,9 @@ export default {
     },
     getOrders(fn) {
       const data = this.getData();
-      this.$http.order.list(data).then(res => {
+      this.$http.spm.getOrders(data).then(res => {
         const { code, data, message } = res.data;
         const { list, hasNextPage } = data;
-        list.forEach(item => {
-          item.content = item.commodityName.join("+");
-        });
         this.isFinished = !hasNextPage;
         this.orders = this.orders.concat(list);
         this.$nextTick(() => {
@@ -123,10 +120,8 @@ export default {
       });
     },
     goToCarOrderStatusChange(order) {
-      Toast.info("功能待完善", 1500);
-      return;
       this.$router.push({
-        name: "car_order_status_change",
+        name: "spm_order_status_change",
         params: {
           order
         }
@@ -137,8 +132,13 @@ export default {
     OrderType
   },
   mounted() {
+    const { roles } = this.$ls.get("user");
+    if (roles.indexOf("supermarketAdmin") == -1) {
+      this.$router.replace("/no_permission");
+      return;
+    }
     pageCurrent = 1;
-    // this.getOrders();
+    this.getOrders();
   }
 };
 </script>

@@ -118,7 +118,7 @@ const $http = {
     },
     completeOrder(data) {
       return send({
-        url: "carWash/complete",
+        url: "carWash/order/complete",
         method: "post",
         data
       })
@@ -134,6 +134,20 @@ const $http = {
       return send({
         url: "carWash/order/list",
         method: "post",
+        data
+      })
+    },
+    getDetail(data) {
+      return send({
+        url: 'carWash/order/viwe',
+        method: 'post',
+        data
+      })
+    },
+    confirmPay(data) {
+      return send({
+        url: 'carWash/order/payment',
+        method: 'post',
         data
       })
     }

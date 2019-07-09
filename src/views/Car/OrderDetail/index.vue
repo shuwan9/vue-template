@@ -6,7 +6,7 @@
         <span>{{order.statusName}}</span>
       </div>
       <div class="info">
-        <span>请在规定时间交付钥匙并付款</span>
+        <span>{{order.tipsContent}}</span>
       </div>
       <div class="info">
         <span>订单金额：￥{{order.price?order.price:0}}</span>

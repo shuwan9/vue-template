@@ -25,7 +25,7 @@ export default {
   },
   methods: {
     onChooseOrderType(orderType) {
-      console.log(orderType);
+      // console.log(orderType);
       this.currentKey = orderType.key;
     }
   },

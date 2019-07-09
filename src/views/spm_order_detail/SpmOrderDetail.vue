@@ -1,7 +1,11 @@
 <template>
   <div class="order-detail">
     <user-info :order="order"></user-info>
-    <dish-info :dishs="order.orderDetail" :totalPrice="order.price"></dish-info>
+    <dish-info
+      :dishs="order.orderDetail"
+      :total-price="order.price"
+      :tips-content="order.tipsContent"
+    ></dish-info>
     <div class="order-number">
       <div>
         <span>您的取货码:</span>

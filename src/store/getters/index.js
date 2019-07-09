@@ -18,8 +18,11 @@ const getters = {
   },
   supermarketCartTotal(state) {
     const total = state.supermarketCart.reduce((total, item) => {
-      return total + (item.price * item.hasAddNumber) / 100
+      return total + item.hasAddNumber
     }, 0)
+    // const total = state.supermarketCart.reduce((total, item) => {
+    //   return total + (item.price * item.hasAddNumber) / 100
+    // }, 0)
     return total > 99 ? "..." : total
   }
 }

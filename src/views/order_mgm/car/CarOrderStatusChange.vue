@@ -36,8 +36,8 @@
       <div class="button-container">
         <div>
           <md-button inline size="small" @click="back()">我的订单</md-button>
-          <md-button inline size="small" v-if="order.status == 4" @click="confirmOrder()">确认已付款</md-button>
-          <md-button inline size="small" v-if="order.status == 5" @click="completeOrder()">确认已完成</md-button>
+          <md-button inline size="small" v-if="order.tips == 1" @click="confirmPay()">确认已付款</md-button>
+          <md-button inline size="small" v-if="order.tips == 2" @click="completeOrder()">确认已完成</md-button>
         </div>
       </div>
     </div>
@@ -53,7 +53,18 @@ export default {
     };
   },
   methods: {
-    getOrder(id) {},
+    getOrder(id) {
+      const data = {
+        content: JSON.stringify({ id })
+      };
+      this.$http.car.getDetail(data).then(res => {
+        const { code, message, data } = res.data;
+        data.serviceContent = data.serviceName
+          ? data.serviceName.join("+")
+          : "";
+        this.order = data;
+      });
+    },
     back() {
       this.$router.go(-1);
     },
@@ -67,21 +78,21 @@ export default {
         const { code, message } = res.data;
         Toast.info(message, 1500);
         setTimeout(() => {
-          this.back();
+          this.getOrder(this.order.id);
         }, 1500);
       });
     },
-    confirmOrder() {
+    confirmPay() {
       const data = {
         content: JSON.stringify({
           id: this.order.id
         })
       };
-      this.$http.car.confirmOrder(data).then(res => {
+      this.$http.car.confirmPay(data).then(res => {
         const { code, message } = res.data;
         Toast.info(message, 1500);
         setTimeout(() => {
-          this.back();
+          this.getOrder(this.order.id);
         }, 1500);
       });
     }
@@ -93,8 +104,7 @@ export default {
       return;
     }
     const { id } = order;
-    order.serviceContent = order.serviceName ? order.serviceName.join("+") : "";
-    this.order = order;
+    this.getOrder(id);
   }
 };
 </script>

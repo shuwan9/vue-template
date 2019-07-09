@@ -1,5 +1,5 @@
 <template>
-  <div class="car-order-status-change order-status-change">
+  <div class="spm-order-status-change order-status-change">
     <div>
       <div class="user-info info">
         <div>
@@ -8,10 +8,10 @@
         </div>
         <div>
           <div class="inline color-888">{{order.userPhone}}</div>
-          <div class="inline">取餐时间:{{order.mealTakingTime | timeStamp}}</div>
+          <div class="inline">取餐时间:{{order.pickUpTime | timeStamp}}</div>
         </div>
       </div>
-      <div class="meal-info info">
+      <!-- <div class="meal-info info">
         <div v-for="dish in order.dishArray" :key="dish.id">
           <div class="inline">
             <img :src="dish.imgUrl" alt />
@@ -26,17 +26,9 @@
             </div>
           </div>
         </div>
-      </div>
+      </div>-->
       <div class="button-container">
-        <!-- 农产品 -->
-        <div v-if="order.dishType==3">
-          <md-button inline size="small" @click="back()">返回</md-button>
-          <md-button inline size="small" v-if="order.tips == 5" @click="prepareComplete()">确认配货完成</md-button>
-          <md-button inline size="small" v-if="order.tips==7" @click="confirmPay()">确认已付款</md-button>
-          <md-button inline size="small" v-if="order.tips == 6" @click="completeOrder()">确认已完成</md-button>
-        </div>
-        <!-- 非农产品 -->
-        <div v-else>
+        <div>
           <md-button inline size="small" @click="back()">返回</md-button>
           <md-button inline size="small" v-if="order.tips == 1" @click="prepareComplete()">确认配货完成</md-button>
           <md-button inline size="small" v-if="order.tips == 2" @click="confirmPay()">确认已付款</md-button>
@@ -67,7 +59,7 @@ export default {
       this.$router.go(-1);
     },
     getOrder(id) {
-      this.$http.order.detail(id).then(res => {
+      this.$http.spm.getOrderDetail(id).then(res => {
         const { code, message, data } = res.data;
         this.order = data;
       });
@@ -81,18 +73,6 @@ export default {
       };
     },
     prepareComplete() {
-      if (this.order.dishType == 3) {
-        const { roles } = this.$ls.get("user");
-        if (roles.indexOf("farmAdmin") == -1) {
-          return;
-        }
-      }
-      if (this.order.dishType == 4) {
-        const { roles } = this.$ls.get("user");
-        if (roles.indexOf("cakeAdmin") == -1) {
-          return;
-        }
-      }
       const data = this.getData();
       this.$http.order.prepareComplete(data).then(res => {
         const { code, message, data } = res.data;
@@ -132,7 +112,7 @@ export default {
   mounted() {
     const { order } = this.$route.params;
     if (!order) {
-      this.$router.push("/meal_order_mgm");
+      this.$router.push("/spm_order_mgm");
       return;
     }
     const { id } = order;
