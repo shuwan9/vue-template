@@ -181,6 +181,20 @@ const $http = {
         url: `supermarket/order/view/${id}`
       })
     },
+    prepareComplete(data) {
+      return send({
+        url: 'supermarket/order/dCompletion',
+        method: 'post',
+        data
+      })
+    },
+    confirmPay(data) {
+      return send({
+        url: 'supermarket/order/payment',
+        method: "post",
+        data
+      })
+    },
     completeOrder(data) {
       return send({
         url: "supermarket/order/complete",

@@ -11,14 +11,14 @@
           <div class="inline">取餐时间:{{order.pickUpTime | timeStamp}}</div>
         </div>
       </div>
-      <!-- <div class="meal-info info">
-        <div v-for="dish in order.dishArray" :key="dish.id">
+      <div class="meal-info info">
+        <div v-for="dish in order.orderDetail" :key="dish.id">
           <div class="inline">
             <img :src="dish.imgUrl" alt />
           </div>
           <div class="inline">
             <div>
-              <div class="inline">{{dish.dishName}}</div>
+              <div class="inline">{{dish.commName}}</div>
               <div class="inline">x{{dish.count}}</div>
             </div>
             <div class="price">
@@ -26,7 +26,7 @@
             </div>
           </div>
         </div>
-      </div>-->
+      </div>
       <div class="button-container">
         <div>
           <md-button inline size="small" @click="back()">返回</md-button>
@@ -74,7 +74,7 @@ export default {
     },
     prepareComplete() {
       const data = this.getData();
-      this.$http.order.prepareComplete(data).then(res => {
+      this.$http.spm.prepareComplete(data).then(res => {
         const { code, message, data } = res.data;
         Toast.info(message, 1500);
         if (code == 0) {
@@ -86,7 +86,7 @@ export default {
     },
     confirmPay() {
       const data = this.getData();
-      this.$http.order.confirmPay(data).then(res => {
+      this.$http.spm.confirmPay(data).then(res => {
         const { code, message, data } = res.data;
         Toast.info(message, 1500);
         if (code == 0) {
@@ -98,7 +98,7 @@ export default {
     },
     completeOrder() {
       const data = this.getData();
-      this.$http.order.completeOrder(data).then(res => {
+      this.$http.spm.completeOrder(data).then(res => {
         const { code, message, data } = res.data;
         Toast.info(message, 1500);
         if (code == 0) {

@@ -30,12 +30,12 @@
           </div>
           <div class="inline">{{order.createDate | timeStamp}}</div>
         </div>
-        <!-- <div>
+        <div>
           <div class="inline">
             <span>订单内容</span>
           </div>
-          <div class="inline text-over-flow">{{order.tipsContent }}</div>
-        </div>-->
+          <div class="inline text-over-flow">{{order.products }}</div>
+        </div>
         <div>
           <div class="inline">
             <span>订单状态</span>
