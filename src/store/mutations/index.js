@@ -102,7 +102,7 @@ const mutations = {
     state.supermarketCart.forEach(item => (item.hasAddNumber = 0))
   },
   clearSearchName(state) {
-    console.log(1111111111)
+    // console.log(1111111111)
     state.search.name = ""
   },
   clearSearchName1(state) {
