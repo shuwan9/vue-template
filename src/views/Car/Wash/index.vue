@@ -116,7 +116,7 @@ export default {
           //   }
           // });
           this.$router.push({
-            name: "orderdetail",
+            name: "car_order_detail",
             params: {
               order: data
             }

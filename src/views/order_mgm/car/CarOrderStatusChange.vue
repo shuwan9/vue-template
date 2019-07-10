@@ -37,7 +37,8 @@
         <div>
           <md-button inline size="small" @click="back()">我的订单</md-button>
           <md-button inline size="small" v-if="order.tips == 1" @click="confirmPay()">确认已付款</md-button>
-          <md-button inline size="small" v-if="order.tips == 2" @click="completeOrder()">确认已完成</md-button>
+          <md-button inline size="small" v-if="order.tips == 2" @click="completeWash()">确认洗车完成</md-button>
+          <md-button inline size="small" v-if="order.tips == 3" @click="completeOrder()">确认已完成</md-button>
         </div>
       </div>
     </div>
@@ -75,6 +76,20 @@ export default {
         })
       };
       this.$http.car.completeOrder(data).then(res => {
+        const { code, message } = res.data;
+        Toast.info(message, 1500);
+        setTimeout(() => {
+          this.getOrder(this.order.id);
+        }, 1500);
+      });
+    },
+    completeWash() {
+      const data = {
+        content: JSON.stringify({
+          id: this.order.id
+        })
+      };
+      this.$http.car.completeWash(data).then(res => {
         const { code, message } = res.data;
         Toast.info(message, 1500);
         setTimeout(() => {

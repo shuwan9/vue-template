@@ -123,6 +123,13 @@ const $http = {
         data
       })
     },
+    completeWash(data) {
+      return send({
+        url: "carWash/order/completionOfJobs",
+        method: "post",
+        data
+      })
+    },
     locationList(data) {
       return send({
         url: "carWash/location/list",
