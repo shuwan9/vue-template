@@ -98,6 +98,19 @@ export default {
       this.$http.spm.getOrders(data).then(res => {
         const { code, data, message } = res.data;
         const { list, hasNextPage } = data;
+
+        list.forEach(item => {
+          item.products = item.commodityList.join("+");
+          // if (item.orderDetail && item.orderDetail.length) {
+          //   item.products = item.orderDetail
+          //     .map(item2 => {
+          //       return item2.commName;
+          //     })
+          //     .join("+");
+          // } else {
+          //   item.products = "";
+          // }
+        });
         this.isFinished = !hasNextPage;
         this.orders = this.orders.concat(list);
         this.$nextTick(() => {
