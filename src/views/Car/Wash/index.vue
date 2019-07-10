@@ -115,6 +115,9 @@ export default {
           //     order: data
           //   }
           // });
+          data.serviceContent = data.detailList
+            .map(item => item.serviceName)
+            .join("+");
           this.$router.push({
             name: "car_order_detail",
             params: {
