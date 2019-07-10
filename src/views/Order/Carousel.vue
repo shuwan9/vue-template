@@ -2,19 +2,25 @@
   <div class="carousel">
     <md-swiper ref="swiper" :is-prevent="false" :useNative-driver="false">
       <md-swiper-item :key="$index" v-for="(image, $index) in images">
-        <img :src="image" alt>
+        <img :src="image.imgUrl" alt />
       </md-swiper-item>
     </md-swiper>
   </div>
 </template>
 
 <script>
-import image from "@/assets/carousel.png";
+// import image from "@/assets/carousel.png";
 export default {
   data() {
     return {
-      images: [image, image, image, image]
+      images: []
     };
+  },
+  mounted() {
+    this.$http.carousel.canteen().then(res => {
+      const { code, message, data } = res.data;
+      this.images = data;
+    });
   }
 };
 </script>
@@ -27,6 +33,7 @@ export default {
       text-align: center;
       img {
         width: 100%;
+        max-height: 100%;
       }
     }
     .md-swiper-indicators {

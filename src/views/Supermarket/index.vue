@@ -13,7 +13,7 @@ import image from "@/assets/carousel.png";
 export default {
   data() {
     return {
-      images: [image, image],
+      images: [],
       routerLinks: [
         {
           to: "/supermarket/products",
@@ -25,6 +25,12 @@ export default {
         }
       ]
     };
+  },
+  mounted() {
+    this.$http.carousel.spm().then(res => {
+      const { code, message, data } = res.data;
+      this.images = data.map(item => item.imgUrl);
+    });
   },
   components: {
     Carousel,

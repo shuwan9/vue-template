@@ -208,6 +208,19 @@ const $http = {
   },
   getMeals(data) {
     return send({ url: "/varietyOfDishes/list", method: "post", data })
+  },
+  carousel: {
+    canteen() {
+      return send({
+        url: 'config/rotaryPlantingMap/restaurant'
+      })
+    },
+    spm() {
+      return send({
+        url: 'config/rotaryPlantingMap/supermarket'
+      })
+    }
+
   }
 }
 
