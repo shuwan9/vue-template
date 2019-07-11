@@ -143,7 +143,7 @@ export default {
         padding: 8px 0;
       }
       .inline {
-        font-size: 12px;
+        font-size: 14px;
         width: 30%;
         text-align: center;
         img {
@@ -167,7 +167,7 @@ export default {
       }
     }
     .meal-info {
-      font-size: 12px;
+      font-size: 14px;
       max-height: 300px;
       overflow: auto;
       .inline {

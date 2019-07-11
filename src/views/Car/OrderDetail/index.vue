@@ -78,7 +78,7 @@ export default {
       z-index: 20;
       color: #fff;
       font-size: 14px;
-      padding: 12px 20px;
+      padding: 14px 20px;
     }
     img {
       position: absolute;
@@ -117,7 +117,7 @@ export default {
     .info {
       padding: 8px 15px;
       .inline {
-        font-size: 12px;
+        font-size: 14px;
         width: 50%;
         text-align: left;
         &:nth-child(2) {

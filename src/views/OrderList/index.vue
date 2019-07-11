@@ -170,7 +170,7 @@ export default {
       }
       .md-scroll-view-more {
         padding: 5px 0;
-        font-size: 12px;
+        font-size: 14px;
       }
     }
   }

@@ -4,7 +4,7 @@ const login = {
   // captcha: "123456"
   username: process.env.NODE_ENV == "development" ? "疏旺" : "",
   mobile: process.env.NODE_ENV == "development" ? "18762750392" : "",
-  captcha: process.env.NODE_ENV == "development" ? "576961" : ""
+  captcha: process.env.NODE_ENV == "development" ? "111111" : ""
 }
 
 const search = {

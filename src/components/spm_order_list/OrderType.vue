@@ -40,7 +40,7 @@ export default {
   .inline {
     width: 33.333%;
     text-align: center;
-    font-size: 12px;
+    font-size: 14px;
     height: 20px;
     line-height: 20px;
     &.active {

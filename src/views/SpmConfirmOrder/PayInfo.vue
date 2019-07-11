@@ -27,13 +27,13 @@ export default {};
         width: 48%;
         &:nth-child(1) {
           text-align: left;
-          font-size: 12px;
+          font-size: 14px;
         }
         &:nth-child(2) {
           text-align: right;
           // color: #4373ec;
           color: #888;
-          font-size: 12px;
+          font-size: 14px;
         }
       }
     }

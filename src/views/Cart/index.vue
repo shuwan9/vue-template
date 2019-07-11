@@ -151,7 +151,7 @@ export default {
             border-radius: 50%;
             outline: none;
             border: none;
-            font-size: 12px;
+            font-size: 14px;
             background-color: #e12525;
             color: #fff;
           }

@@ -2,7 +2,7 @@
   <div class="form s-c">
     <div class="title s-c">登&nbsp;&nbsp;录</div>
     <div class="input">
-      <md-input-item placeholder="请输入用户名" v-model="login.username">
+      <md-input-item placeholder="请输入姓名" v-model="login.username">
         <i slot="left" class="iconfont iconxingming"></i>
       </md-input-item>
     </div>
@@ -106,7 +106,7 @@ export default {
         font-size: 25px;
       }
       .captcha {
-        font-size: 12px;
+        font-size: 14px;
         color: #4373ec;
         &.sended {
           color: #888;

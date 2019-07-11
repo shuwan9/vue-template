@@ -41,7 +41,7 @@ export default {
     }
     .inline,
     input {
-      font-size: 12px;
+      font-size: 14px;
       box-sizing: border-box;
       vertical-align: middle;
       background-color: transparent;

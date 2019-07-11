@@ -143,6 +143,8 @@ export default {
     chooseThisCar(car) {
       this.cars.forEach(car => (car.choose = false));
       car.choose = true;
+      this.openChooseCarDialog = false;
+      this.$emit("chooseCar", this.cars);
     }
   },
   mounted() {
@@ -197,7 +199,7 @@ export default {
       text-align: center;
       padding: 15px 10px;
       .inline {
-        font-size: 12px;
+        font-size: 14px;
         padding: 5px;
         margin: 2px;
         border-radius: 5px;
@@ -224,7 +226,7 @@ export default {
       top: 50%;
       transform: translateY(-50%);
       right: 10px;
-      font-size: 12px;
+      font-size: 14px;
       color: #4373ec;
     }
   }
@@ -238,7 +240,7 @@ export default {
     }
     .inline,
     input {
-      font-size: 12px;
+      font-size: 14px;
       box-sizing: border-box;
       vertical-align: middle;
     }

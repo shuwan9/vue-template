@@ -31,9 +31,9 @@
         <!-- 农产品 -->
         <div v-if="order.dishType==3">
           <md-button inline size="small" @click="back()">返回</md-button>
-          <md-button inline size="small" v-if="order.tips == 5" @click="prepareComplete()">确认配货完成</md-button>
-          <md-button inline size="small" v-if="order.tips==7" @click="confirmPay()">确认已付款</md-button>
-          <md-button inline size="small" v-if="order.tips == 6" @click="completeOrder()">确认已完成</md-button>
+          <md-button inline size="small" v-if="order.tips == 5" @click="confirmPay()">确认已付款</md-button>
+          <md-button inline size="small" v-if="order.tips == 6" @click="prepareComplete()">确认配货完成</md-button>
+          <md-button inline size="small" v-if="order.tips == 7" @click="completeOrder()">确认已完成</md-button>
         </div>
         <!-- 非农产品 -->
         <div v-else>
@@ -163,7 +163,7 @@ export default {
         padding: 8px 0;
       }
       .inline {
-        font-size: 12px;
+        font-size: 14px;
         width: 30%;
         text-align: center;
         img {
@@ -187,7 +187,7 @@ export default {
       }
     }
     .meal-info {
-      font-size: 12px;
+      font-size: 14px;
       max-height: 300px;
       overflow: auto;
       .inline {

@@ -1,7 +1,7 @@
 <template>
   <div class="meal">
     <div class="inline">
-      <img :src="meal.layoutOfDishes">
+      <img :src="meal.layoutOfDishes" />
     </div>
     <div class="inline">
       <div class="detail">
@@ -30,6 +30,7 @@
               @click="minus($event,meal)>0"
             ></i>
           </transition>
+          <span class="has-add-number" v-show="meal.hasAddNumber">{{meal.hasAddNumber}}</span>
           <i
             class="iconfont iconadd"
             ref="ballContainer"
@@ -100,8 +101,12 @@ export default {
     font-size: 0;
     padding: 5px;
     border-bottom: 1px solid #ededed;
+    .has-add-number {
+      color: #4373ec;
+      font-size: 14px;
+    }
     > .inline {
-      font-size: 12px;
+      font-size: 14px;
       &:nth-child(1) {
         width: 30%;
         img {
@@ -149,13 +154,13 @@ export default {
             text-align: left;
           }
           &.num {
-            font-size: 12px;
+            font-size: 14px;
             span {
               color: #4373ec;
             }
           }
           &.desc {
-            font-size: 12px;
+            font-size: 14px;
           }
           &.price {
             text-align: left;

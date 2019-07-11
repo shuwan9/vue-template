@@ -162,7 +162,7 @@ export default {
     padding-top: 10px;
     border-bottom: 1px solid #ededed;
     .inline {
-      font-size: 12px;
+      font-size: 14px;
       padding: 5px 10px;
       border: 1px solid #888;
       color: #888;
@@ -192,9 +192,9 @@ export default {
       padding: 10px 10px;
       font-size: 0;
       > .inline {
-        font-size: 12px;
+        font-size: 14px;
         .iconfont {
-          font-size: 12px;
+          font-size: 14px;
         }
         &:nth-child(1) {
           text-align: left;

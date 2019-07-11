@@ -7,7 +7,7 @@
         <span>您的取餐码:</span>
       </div>
       <div>
-        <span>{{order.orderNumber}}</span>
+        <span>{{order.pickUpCode}}</span>
       </div>
     </div>
     <div class="button-container">

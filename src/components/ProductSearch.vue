@@ -48,7 +48,7 @@ export default {
         vertical-align: middle;
         height: 28px;
         line-height: 28px;
-        font-size: 12px;
+        font-size: 14px;
       }
     }
     .md-field-item-content:before {
@@ -62,7 +62,7 @@ export default {
     padding: 10px 15px;
     outline: none;
     border: none;
-    font-size: 12px;
+    font-size: 14px;
   }
 }
 </style>

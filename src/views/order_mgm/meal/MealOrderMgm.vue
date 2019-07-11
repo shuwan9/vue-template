@@ -167,7 +167,7 @@ export default {
         background-color: #fff;
         .inline {
           width: 50%;
-          font-size: 12px;
+          font-size: 14px;
           padding: 10px 0;
           box-sizing: border-box;
           padding-left: 10px;
@@ -181,7 +181,7 @@ export default {
     }
     .md-scroll-view-more {
       padding: 5px 0;
-      font-size: 12px;
+      font-size: 14px;
     }
   }
 }

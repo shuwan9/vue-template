@@ -51,7 +51,7 @@ export default {
 .confirm-info {
   background-color: #fff;
   div {
-    padding: 12px 15px;
+    padding: 14px 15px;
     font-size: 14px;
     border-bottom: 1px solid #ededed;
     .inline {

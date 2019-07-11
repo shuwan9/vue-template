@@ -99,7 +99,7 @@ export default {
   .scroll-view {
     height: 100%;
     .md-scroll-view-more {
-      font-size: 12px;
+      font-size: 14px;
       padding: 5px;
     }
   }
