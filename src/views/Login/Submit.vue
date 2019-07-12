@@ -33,10 +33,10 @@ const checkLogin = (username, mobile, captcha, loading) => {
     Toast.failed("请填写格式正确的手机号", 1500);
     return false;
   }
-  if (!checkCaptcha(captcha)) {
-    Toast.failed("请填写验证码", 1500);
-    return false;
-  }
+  // if (!checkCaptcha(captcha)) {
+  //   Toast.failed("请填写验证码", 1500);
+  //   return false;
+  // }
   if (loading) {
     return false;
   }
@@ -59,6 +59,7 @@ export default {
       const data = {
         content: JSON.stringify({
           phone: mobile,
+          name: username,
           verificationCode: captcha
         })
       };

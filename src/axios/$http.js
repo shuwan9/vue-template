@@ -130,6 +130,13 @@ const $http = {
         data
       })
     },
+    getRestLocation(data) {
+      return send({
+        url: "carWash/carLocation/list",
+        method: "post",
+        data
+      })
+    },
     locationList(data) {
       return send({
         url: "carWash/location/list",

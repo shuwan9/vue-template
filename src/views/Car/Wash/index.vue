@@ -2,7 +2,12 @@
   <div class="wash">
     <user-info :user="user"></user-info>
     <car-info @chooseCar="chooseCar"></car-info>
-    <order-info :services="services" @chooseDate="chooseDate" @chooseLocation="chooseLocation"></order-info>
+    <order-info
+      :services="services"
+      @chooseDate="chooseDate"
+      @chooseLocation="chooseLocation"
+      @updateRestLocation="updateRestLocation"
+    ></order-info>
     <div class="button-container width-100">
       <span class="inline width-50">
         共计:&nbsp;
@@ -36,7 +41,8 @@ export default {
       services: [],
       currentChooseCar: null,
       currentChooseLocation: null,
-      makeAnAppointmentTime: null
+      makeAnAppointmentTime: null,
+      restLocationNum: 0
     };
   },
   computed: {
@@ -67,6 +73,14 @@ export default {
     chooseDate(date) {
       this.makeAnAppointmentTime = new Date(date).getTime();
     },
+    updateRestLocation(num) {
+      // console.log(num);
+      if (!num) {
+        this.restLocationNum = 0;
+      } else {
+        this.restLocationNum = num;
+      }
+    },
     check() {
       if (!this.currentChooseCar) {
         Toast.failed("请选择您的车辆", 1500);
@@ -77,7 +91,15 @@ export default {
         return false;
       }
       if (!this.currentChooseLocation) {
+        if (this.restLocationNum == 0) {
+          Toast.failed("抱歉，当前预约时间车位已满", 1500);
+          return false;
+        }
         Toast.failed("请选择停车位置", 1500);
+        return false;
+      }
+      if (this.restLocationNum == 0) {
+        Toast.failed("抱歉，当前预约时间车位已满", 1500);
         return false;
       }
       const chooseServices = this.services.filter(service => {

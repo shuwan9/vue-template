@@ -9,14 +9,14 @@
     <div class="input">
       <md-input-item placeholder="请输入手机号" v-model="login.mobile">
         <i slot="left" class="iconfont iconziyuan"></i>
-        <span slot="right" class="captcha" :class="timer?'sended':''" @click="getCaptcha()">{{tip}}</span>
+        <!-- <span slot="right" class="captcha" :class="timer?'sended':''" @click="getCaptcha()">{{tip}}</span> -->
       </md-input-item>
     </div>
-    <div class="input">
+    <!-- <div class="input">
       <md-input-item placeholder="请输入验证码" v-model="login.captcha">
         <i slot="left" class="iconfont iconyanzhengma"></i>
       </md-input-item>
-    </div>
+    </div>-->
     <Submit></Submit>
   </div>
 </template>

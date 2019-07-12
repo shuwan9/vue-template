@@ -34,7 +34,8 @@
       </div>
       <div class="number" v-show="datePickerValue">
         <span class="inline width-50">{{datePickerValue | timeStamp2}}</span>
-        <span class="inline width-50">剩余车位:&nbsp;{{locations.length}}</span>
+        <!-- <span class="inline width-50">剩余车位:&nbsp;{{locations.length}}</span> -->
+        <span class="inline width-50">剩余车位:&nbsp;{{restLocationNum}}</span>
       </div>
     </div>
 
@@ -90,6 +91,7 @@ export default {
       isDatePickerShow: false,
       currentDate: new Date(),
       maxDate: getMaxDate(),
+      restLocationNum: 0,
       locations: [],
       currentLocation: {},
       openChooseCarLocationDialog: false
@@ -112,6 +114,7 @@ export default {
       );
       this.datePickerValue = datePickerValue;
       this.getLocations();
+      this.getRestLocation();
       this.$emit("chooseDate", datePickerValue);
     },
     chooseLocation() {
@@ -129,6 +132,18 @@ export default {
       this.currentLocation = location;
       this.openChooseCarLocationDialog = false;
       this.$emit("chooseLocation", location);
+    },
+    getRestLocation() {
+      const data = {
+        content: JSON.stringify({
+          forTime: new Date(this.datePickerValue).getTime()
+        })
+      };
+      this.$http.car.getRestLocation(data).then(res => {
+        const { code, message, data } = res.data;
+        this.restLocationNum = data;
+        this.$emit("updateRestLocation", this.restLocationNum);
+      });
     },
     getLocations(fn) {
       const data = {
