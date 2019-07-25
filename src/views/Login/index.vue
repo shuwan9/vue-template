@@ -1,18 +1,34 @@
 <template>
   <div class="login">
     <Bg></Bg>
-    <Form></Form>
+    <login-form v-show="showLogin" :toggle="toggle"></login-form>
+    <bind-form v-show="!showLogin" :toggle="toggle"></bind-form>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import Bg from "./Bg";
-import Form from "./Form";
+import LoginForm from "./LoginForm";
+import BindForm from "./BindForm";
 export default {
+  data() {
+    return {
+      showLogin: false
+    };
+  },
   components: {
     Bg,
-    Form
+    LoginForm,
+    BindForm
+  },
+  methods: {
+    toggle() {
+      this.showLogin = !this.showLogin;
+    }
+  },
+  mounted() {
+    this.showLogin = !!this.$ls.get("user");
   }
 };
 </script>

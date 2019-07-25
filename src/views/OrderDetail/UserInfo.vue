@@ -6,8 +6,10 @@
     </div>
     <div>
       <span class="inline">{{order.userPhone}}</span>
+      <span class="inline farm" v-if="order.dishType==2">取餐时间:当日17:30--21:00</span>
       <span class="inline farm" v-if="order.dishType==3">取餐时间:&nbsp;下周一</span>
-      <span class="inline" v-else>取餐时间:&nbsp;{{order.mealTakingTime | timeStamp}}</span>
+      <span class="inline farm" v-if="order.dishType==4">取餐时间:&nbsp;下单三天后</span>
+      <span class="inline" v-if="order.dishType==1">取餐时间:&nbsp;{{order.mealTakingTime | timeStamp}}</span>
     </div>
   </div>
 </template>
@@ -38,7 +40,7 @@ export default {
         &:nth-child(2) {
           text-align: right;
           color: #4373ec;
-          font-size: 14px;
+          font-size: 12px;
           width: 56%;
           &.status-name {
             color: #fe821e;

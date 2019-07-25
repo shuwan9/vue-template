@@ -1,15 +1,15 @@
 <template>
   <div class="form s-c">
     <div class="title s-c">登&nbsp;&nbsp;录</div>
-    <div class="input">
+    <!-- <div class="input">
       <md-input-item placeholder="请输入姓名" v-model="login.username">
         <i slot="left" class="iconfont iconxingming"></i>
       </md-input-item>
-    </div>
+    </div>-->
     <div class="input">
       <md-input-item placeholder="请输入手机号" v-model="login.mobile">
         <i slot="left" class="iconfont iconziyuan"></i>
-        <!-- <span slot="right" class="captcha" :class="timer?'sended':''" @click="getCaptcha()">{{tip}}</span> -->
+        <span slot="right" class="captcha" :class="timer?'sended':''" @click="getCaptcha()">{{tip}}</span>
       </md-input-item>
     </div>
     <div class="input">
@@ -17,7 +17,7 @@
         <i slot="left" class="iconfont iconyanzhengma"></i>
       </md-input-item>
     </div>
-    <Submit></Submit>
+    <Submit :toggle="toggle"></Submit>
   </div>
 </template>
 
@@ -25,6 +25,7 @@
 import { mapState } from "vuex";
 import { Toast } from "mand-mobile";
 import Submit from "./Submit.vue";
+import { checkUsername, checkMobile, checkCaptcha } from "@/util/check";
 export default {
   data() {
     return {
@@ -32,6 +33,7 @@ export default {
       timer: null
     };
   },
+  props: ["toggle"],
   components: {
     Submit
   },
@@ -51,12 +53,16 @@ export default {
       if (this.timer) {
         return;
       }
-      if (!this.login.username) {
-        Toast.failed("请输入用户名", 1500);
-        return;
-      }
+      // if (!this.login.username) {
+      //   Toast.failed("请输入用户名", 1500);
+      //   return;
+      // }
       if (!this.login.mobile) {
         Toast.failed("请输入手机号", 1500);
+        return;
+      }
+      if (!checkMobile(this.login.mobile)) {
+        Toast.failed("请格式正确的手机号", 1500);
         return;
       }
       const data = this.getSendCodeData();
@@ -101,7 +107,7 @@ export default {
       font-weight: bold;
     }
     .input {
-      padding: 20px 0;
+      padding: 15px 0;
       .iconfont {
         font-size: 25px;
       }

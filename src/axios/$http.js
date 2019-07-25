@@ -1,33 +1,33 @@
-import { Toast } from "mand-mobile"
-import App from "@/main"
-import { getToken } from "./config"
-import instance from "./instance"
+import { Toast } from "mand-mobile";
+import App from "@/main";
+import { getToken } from "./config";
+import instance from "./instance";
 
 const send = (opts, cb) => {
   return new Promise((resolve, reject) => {
-    instance.defaults.headers.token = getToken()
+    instance.defaults.headers.token = getToken();
     instance(opts)
       .then(res => {
-        const { code, data, message } = res.data
+        const { code, data, message } = res.data;
         if (code == 0) {
-          resolve(res)
+          resolve(res);
         } else if (code == 405) {
-          Toast.info(message, 1500)
+          Toast.info(message, 1500);
           setTimeout(() => {
-            App.$router.push("/login")
-          })
+            App.$router.push("/login");
+          });
         } else {
-          Toast.info(message, 1500)
-          cb && cb()
+          Toast.info(message, 1500);
+          cb && cb();
         }
       })
       .catch(err => {
-        console.log(err)
-        Toast.failed("连接服务器失败，请稍后再试", 1500)
-        cb && cb()
-      })
-  })
-}
+        console.log(err);
+        Toast.failed("连接服务器失败，请稍后再试", 1500);
+        cb && cb();
+      });
+  });
+};
 
 const $http = {
   login(data, cb) {
@@ -38,14 +38,33 @@ const $http = {
         data
       },
       cb
-    )
+    );
   },
   sendCode(data) {
     return send({
       url: "user/verification",
       method: "post",
       data
-    })
+    });
+  },
+  bind: {
+    sendCode(data) {
+      return send({
+        url: "user/bindingVerificationCode",
+        method: "post",
+        data
+      });
+    },
+    phone(data, cb) {
+      return send(
+        {
+          url: "user/bindingPhone",
+          method: "post",
+          data
+        },
+        cb
+      );
+    }
   },
   order: {
     createOrder(data) {
@@ -53,60 +72,67 @@ const $http = {
         url: "varietyOfDishes/placeAnOrder",
         method: "post",
         data
-      })
+      });
     },
     list(data) {
-      return send({ url: `varietyOfDishes/order/list`, method: "post", data })
+      return send({ url: `varietyOfDishes/order/list`, method: "post", data });
     },
     detail(id) {
-      return send({ url: `varietyOfDishes/view/${id}` })
+      return send({ url: `varietyOfDishes/view/${id}` });
     },
     completeOrder(data) {
       return send({
         url: "varietyOfDishes/order/complete",
         method: "post",
         data
-      })
+      });
     },
     prepareComplete(data) {
       return send({
         url: "varietyOfDishes/order/completion",
         method: "post",
         data
-      })
+      });
     },
     confirmPay(data) {
       return send({
         url: "varietyOfDishes/order/payment",
         method: "post",
         data
-      })
+      });
+    },
+    cancelOrder(data) {
+      return send({
+        url: "varietyOfDishes/order/cancel",
+        method: "post",
+        data
+      });
     }
   },
   car: {
     services() {
       return send({
         url: "carWash/service/list"
-      })
+      });
     },
     addUserCar(data) {
       return send({
         url: "carWash/userCar/add",
         method: "post",
         data
-      })
+      });
     },
     getUserCars(id) {
       return send({
         url: `carWash/userCar/list/${id}`
-      })
+      });
     },
     createOrder(data) {
       return send({
         url: "carWash/sumbit",
         method: "post",
         data
-      })
+      });
     },
     confirmOrder(data) {
       return send({
@@ -114,56 +140,56 @@ const $http = {
         url: "carWash/payment",
         method: "post",
         data
-      })
+      });
     },
     completeOrder(data) {
       return send({
         url: "carWash/order/complete",
         method: "post",
         data
-      })
+      });
     },
     completeWash(data) {
       return send({
         url: "carWash/order/completionOfJobs",
         method: "post",
         data
-      })
+      });
     },
     getRestLocation(data) {
       return send({
         url: "carWash/carLocation/list",
         method: "post",
         data
-      })
+      });
     },
     locationList(data) {
       return send({
         url: "carWash/location/list",
         method: "post",
         data
-      })
+      });
     },
     getOrders(data) {
       return send({
         url: "carWash/order/list",
         method: "post",
         data
-      })
+      });
     },
     getDetail(data) {
       return send({
-        url: 'carWash/order/viwe',
-        method: 'post',
+        url: "carWash/order/viwe",
+        method: "post",
         data
-      })
+      });
     },
     confirmPay(data) {
       return send({
-        url: 'carWash/order/payment',
-        method: 'post',
+        url: "carWash/order/payment",
+        method: "post",
         data
-      })
+      });
     }
   },
   supermarket: {
@@ -172,7 +198,7 @@ const $http = {
         url: "/supermarket/commodity/list",
         method: "post",
         data
-      })
+      });
     }
   },
   spm: {
@@ -181,61 +207,60 @@ const $http = {
         url: "supermarket/commodity/placeAnOrder",
         method: "post",
         data
-      })
+      });
     },
     getOrders(data) {
       return send({
         url: "supermarket/order/list",
         method: "post",
         data
-      })
+      });
     },
     getOrderDetail(id) {
       return send({
         url: `supermarket/order/view/${id}`
-      })
+      });
     },
     prepareComplete(data) {
       return send({
-        url: 'supermarket/order/dCompletion',
-        method: 'post',
+        url: "supermarket/order/dCompletion",
+        method: "post",
         data
-      })
+      });
     },
     confirmPay(data) {
       return send({
-        url: 'supermarket/order/payment',
+        url: "supermarket/order/payment",
         method: "post",
         data
-      })
+      });
     },
     completeOrder(data) {
       return send({
         url: "supermarket/order/complete",
         method: "post",
         data
-      })
+      });
     }
   },
   getDishTypes() {
-    return send({ url: "/Dists/dishType" })
+    return send({ url: "/Dists/dishType" });
   },
   getMeals(data) {
-    return send({ url: "/varietyOfDishes/list", method: "post", data })
+    return send({ url: "/varietyOfDishes/list", method: "post", data });
   },
   carousel: {
     canteen() {
       return send({
-        url: 'config/rotaryPlantingMap/restaurant'
-      })
+        url: "config/rotaryPlantingMap/restaurant"
+      });
     },
     spm() {
       return send({
-        url: 'config/rotaryPlantingMap/supermarket'
-      })
+        url: "config/rotaryPlantingMap/supermarket"
+      });
     }
-
   }
-}
+};
 
-export default $http
+export default $http;

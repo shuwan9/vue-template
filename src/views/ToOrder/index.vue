@@ -17,7 +17,13 @@ import UserInfo from "./UserInfo";
 import MealInfo from "./MealInfo";
 import PayInfo from "./PayInfo";
 const checkPickMealDate = (pickMealDate, dishType) => {
+  if (dishType.key == 2) {
+    return true;
+  }
   if (dishType.key == 3) {
+    return true;
+  }
+  if (dishType.key == 4) {
     return true;
   }
   if (
@@ -73,7 +79,7 @@ export default {
         price,
         count
       };
-      if (this.dishType.key != 3) {
+      if (this.dishType.key == 1 || this.dishType.key == 2) {
         data.mealTakingTime = new Date(this.pickMealDate).getTime();
       }
       return {
@@ -81,7 +87,6 @@ export default {
       };
     },
     createOrder() {
-      console.log(1);
       const { pickMealDate } = this;
       if (checkPickMealDate(pickMealDate, this.dishType)) {
         const content = this.getOrderContent();

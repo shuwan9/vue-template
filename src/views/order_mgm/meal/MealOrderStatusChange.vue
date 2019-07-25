@@ -177,6 +177,7 @@ export default {
         &:nth-child(2) {
           text-align: right;
           width: 70%;
+          font-size: 12px;
         }
         &.name {
           font-weight: bold;

@@ -1,5 +1,10 @@
 <template>
   <div class="meal-order-mgm order-mgm">
+    <button class="circle">
+      <!-- 今日
+      <br />-->
+      汇总
+    </button>
     <order-type :orderTypes="orderTypes" @chooseOrderType="onChooseOrderType"></order-type>
     <md-scroll-view
       class="scroll-view"
@@ -76,8 +81,8 @@ export default {
   },
   methods: {
     onChooseOrderType(orderType) {
-      this.currentKey = orderType.key;
       pageCurrent = 1;
+      this.currentKey = orderType.key;
       this.isFinished = false;
       this.orders = [];
       this.getOrders();
@@ -135,10 +140,10 @@ export default {
     OrderType
   },
   mounted() {
-    const {roles} = this.$ls.get('user')
-    if(roles.indexOf('canteenAdmin') == -1){
-      this.$router.replace('/no_permission')
-      return
+    const { roles } = this.$ls.get("user");
+    if (roles.indexOf("canteenAdmin") == -1) {
+      this.$router.replace("/no_permission");
+      return;
     }
     pageCurrent = 1;
     this.getOrders();
@@ -150,6 +155,21 @@ export default {
 .order-mgm {
   padding-top: 15px;
   background-color: #ededed;
+  .circle {
+    position: fixed;
+    background-color: rgba($color: #cccccc, $alpha: 0.9);
+    right: 2px;
+    bottom: 2px;
+    z-index: 100;
+    opacity: 0.9;
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    border-radius: 50%;
+    outline: none;
+    border: none;
+    font-size: 12px;
+  }
   .tip {
     height: 100px;
     line-height: 100px;

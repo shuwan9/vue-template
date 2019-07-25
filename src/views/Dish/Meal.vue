@@ -45,12 +45,22 @@
 
 <script>
 import { mapState, mapMutations } from "vuex";
+import { Toast } from "mand-mobile";
 import Bus from "@/plugins/Bus";
+const OVERTIMETIP = "请于每日10:00之前预定";
 export default {
   props: ["meal"],
   methods: {
     add(event, meal) {
       event.stopPropagation();
+      const now = new Date();
+      const hour = now.getHours();
+      if (hour > 9) {
+        if (this.dishType.key == 1 || this.dishType.key == 2) {
+          Toast.failed(OVERTIMETIP, 1500);
+          return;
+        }
+      }
       if (meal.number <= meal.hasAddNumber) {
         return;
       }

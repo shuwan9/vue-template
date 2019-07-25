@@ -7,13 +7,19 @@
         <span>您的取餐码:</span>
       </div>
       <div>
-        <span>{{order.pickUpCode}}</span>
+        <span>{{order.pickUpCode || "付款后生成"}}</span>
       </div>
     </div>
     <div class="button-container">
       <div>
         <md-button inline size="small" @click="back()" :class="order.status==99?'complete':''">我的订单</md-button>
         <md-button inline size="small" @click="orderComplete()" v-show="order.status!=99">我已付款并取餐</md-button>
+        <md-button
+          inline
+          size="small"
+          :class="this.canCancel?'':'can-not-cancel'"
+          @click="cancel()"
+        >取消订单</md-button>
       </div>
     </div>
   </div>
@@ -45,11 +51,27 @@
 import { Toast } from "mand-mobile";
 import UserInfo from "./UserInfo";
 import DishInfo from "./DishInfo";
+import { Dialog } from "mand-mobile";
 export default {
   data() {
     return {
       order: {}
     };
+  },
+  computed: {
+    canCancel() {
+      if (!this.order) {
+        return false;
+      }
+      if (!this.order.cancelTime) {
+        return false;
+      }
+      if (this.order.cancelTime < new Date().getTime()) {
+        return false;
+      } else {
+        return true;
+      }
+    }
   },
   methods: {
     getOrderDetail() {
@@ -79,6 +101,39 @@ export default {
           this.getOrderDetail();
         } else {
           Toast.failed(message, 1500);
+        }
+      });
+    },
+    confirmCancel() {
+      const data = {
+        content: JSON.stringify({
+          id: this.order.id,
+          userId: this.$ls.get("user").id
+        })
+      };
+      this.$http.order.cancelOrder(data).then(res => {
+        const { code, message } = res.data;
+        if (code == 0) {
+          Toast.succeed(message, 1500);
+          setTimeout(() => {
+            this.back();
+          }, 1500);
+        } else {
+          Toast.failed(message, 1500);
+        }
+      });
+    },
+    cancel() {
+      if (!this.canCancel) {
+        Toast.failed("抱歉,取消订单时间已过", 1500);
+        return;
+      }
+      Dialog.confirm({
+        content: `确认取消？`,
+        confirmText: "是",
+        cancelText: "否",
+        onConfirm: () => {
+          this.confirmCancel();
         }
       });
     }
@@ -114,8 +169,9 @@ export default {
       font-size: 14px;
       height: 38px;
       line-height: 38px;
+      padding: 0 5px;
       &:nth-child(1) {
-        margin-right: 10px;
+        margin-right: 5px;
         color: #888;
         &.complete {
           background: linear-gradient(
@@ -131,6 +187,23 @@ export default {
           -40deg,
           rgba(67, 115, 236, 1),
           rgba(63, 157, 244, 1)
+        );
+        color: #fff;
+        margin-right: 5px;
+      }
+      &:nth-child(3) {
+        background: linear-gradient(
+          -40deg,
+          rgba(67, 115, 236, 1),
+          rgba(63, 157, 244, 1)
+        );
+        color: #fff;
+      }
+      &.can-not-cancel {
+        background: linear-gradient(
+          -40deg,
+          rgba(136, 136, 136, 1),
+          rgba(136, 136, 136, 1)
         );
         color: #fff;
       }

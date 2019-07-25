@@ -12,6 +12,9 @@
           v-show="loading"
         >登录中...</md-activity-indicator>
       </md-button>
+      <md-button inline size="small" @click="toggle">
+        <span>去绑定手机号</span>
+      </md-button>
     </div>
     <div class="tip s-a-l">
       <span class>*&nbsp;</span>
@@ -21,12 +24,13 @@
 </template>
 
 <script>
+import { RSA } from "@/axios/config";
 import { mapState } from "vuex";
 import { Toast } from "mand-mobile";
 import { checkUsername, checkMobile, checkCaptcha } from "@/util/check";
 const checkLogin = (username, mobile, captcha, loading) => {
   if (!checkUsername(username)) {
-    Toast.failed("请填写用户名", 1500);
+    Toast.failed("请填写姓名", 1500);
     return false;
   }
   if (!checkMobile(mobile)) {
@@ -48,20 +52,24 @@ export default {
       loading: false
     };
   },
+  props: ["toggle"],
   methods: {
     startLogin() {
       const { loading } = this;
       const { username, mobile, captcha } = this.login;
-      if (!checkLogin(username, mobile, captcha, loading)) {
+      if (!checkLogin("pass", mobile, captcha, loading)) {
+        //不需要检查姓名
         return;
       }
       this.loading = true;
       const data = {
-        content: JSON.stringify({
-          phone: mobile,
-          name: username,
-          verificationCode: captcha
-        })
+        content: RSA(
+          JSON.stringify({
+            phone: mobile,
+            name: username,
+            verificationCode: captcha
+          })
+        )
       };
       this.$http
         .login(data, () => {
@@ -95,11 +103,17 @@ export default {
       width: 80%;
       border-radius: 10px;
       overflow: hidden;
-      background: linear-gradient(
-        90deg,
-        rgba(67, 115, 236, 1),
-        rgba(63, 157, 244, 1)
-      );
+      &.primary {
+        background: linear-gradient(
+          90deg,
+          rgba(67, 115, 236, 1),
+          rgba(63, 157, 244, 1)
+        );
+      }
+      // &.default {
+      // border: 1px solid #ccc;
+      // border-radius: 5px;
+      // }
     }
     .tip {
       margin: 20px auto;

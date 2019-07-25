@@ -3,9 +3,11 @@
     <div>{{user.name}}</div>
     <div>
       <span class="inline">{{user.phone}}</span>
+      <span class="inline farm" v-if="dishType.key==2">取餐时间:当日17:30--21:00</span>
       <span class="inline farm" v-if="dishType.key==3">农产品请于周一领取</span>
+      <span class="inline farm" v-if="dishType.key==4">蛋糕请于三天后领取</span>
       <span
-        v-else
+        v-if="dishType.key==1"
         class="inline"
         @click="chooseDate()"
       >{{pickMealTime?`取餐时间:&nbsp;${pickMealTime}`:'请选择取餐时间'}}</span>
@@ -18,7 +20,8 @@
       :custom-types="['yyyy', 'MM','dd', 'hh', 'mm']"
       :line-height="45"
       :default-date="currentDate"
-      :min-date="currentDate"
+      :min-date="minDate"
+      :max-date="maxDate"
       @change="onDatePickerChange"
       @confirm="onDatePickerConfirm"
     ></md-date-picker>
@@ -33,6 +36,8 @@ export default {
       user: {},
       isDatePickerShow: false,
       currentDate: new Date(),
+      minDate: new Date(),
+      maxDate: null,
       pickMealTime: ""
     };
   },
@@ -46,6 +51,15 @@ export default {
       );
       this.pickMealTime = datePickerValue;
       this.$emit("chooseDate", datePickerValue);
+    },
+    initMaxDate() {
+      if (this.dishType.key == 1 || this.dishType.key == 2) {
+        this.maxDate = new Date(this.minDate.getTime() + 1000 * 3600 * 24 * 1);
+      } else if (this.dishType.key == 3) {
+        this.maxDate = new Date(this.minDate.getTime() + 1000 * 3600 * 24 * 3);
+      } else {
+        this.maxDate = new Date(this.minDate.getTime() + 1000 * 3600 * 24 * 7);
+      }
     }
   },
   computed: {
@@ -53,6 +67,7 @@ export default {
   },
   mounted() {
     this.user = this.$ls.get("user");
+    this.initMaxDate();
   }
 };
 </script>
@@ -76,7 +91,7 @@ export default {
         &:nth-child(2) {
           text-align: right;
           color: #4373ec;
-          font-size: 14px;
+          font-size: 12px;
           width: 56%;
           &.farm {
             color: #333;
