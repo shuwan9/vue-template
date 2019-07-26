@@ -71,7 +71,7 @@ export default {
         &:nth-child(2) {
           text-align: right;
           color: #4373ec;
-          font-size: 14px;
+          font-size: 12px;
           width: 56%;
           &.farm {
             color: #333;

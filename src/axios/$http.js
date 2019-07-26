@@ -241,6 +241,13 @@ const $http = {
         method: "post",
         data
       });
+    },
+    cancelOrder(data) {
+      return send({
+        url: "supermarket/order/cancel",
+        method: "post",
+        data
+      });
     }
   },
   getDishTypes() {

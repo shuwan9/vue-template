@@ -1,6 +1,6 @@
 <template>
   <div class="meal-order-mgm order-mgm">
-    <button class="circle">
+    <button class="circle" @click="goToSummary()">
       <!-- 今日
       <br />-->
       汇总
@@ -134,6 +134,9 @@ export default {
           order
         }
       });
+    },
+    goToSummary() {
+      this.$router.push("/meal_order_summary");
     }
   },
   components: {
@@ -158,6 +161,7 @@ export default {
   .circle {
     position: fixed;
     background-color: rgba($color: #cccccc, $alpha: 0.9);
+    color: rgba(67, 115, 236, 1);
     right: 2px;
     bottom: 2px;
     z-index: 100;

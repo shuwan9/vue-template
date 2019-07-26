@@ -37,7 +37,7 @@ export default {
         &:nth-child(2) {
           text-align: right;
           color: #4373ec;
-          font-size: 14px;
+          font-size: 12px;
           width: 56%;
           &.status-name {
             color: #fe821e;
