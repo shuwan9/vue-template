@@ -160,19 +160,21 @@ export default {
   background-color: #ededed;
   .circle {
     position: fixed;
-    background-color: rgba($color: #cccccc, $alpha: 0.9);
-    color: rgba(67, 115, 236, 1);
+    // background-color: rgba($color: #cccccc, $alpha: 0.9);
+    // color: rgba(67, 115, 236, 1);
+    background-color: rgba(67, 115, 236, 0.7);
+    color: #fff;
     right: 2px;
     bottom: 2px;
     z-index: 100;
-    opacity: 0.9;
+    // opacity: 0.9;
     width: 60px;
     height: 60px;
     line-height: 60px;
     border-radius: 50%;
     outline: none;
     border: none;
-    font-size: 12px;
+    font-size: 14px;
   }
   .tip {
     height: 100px;

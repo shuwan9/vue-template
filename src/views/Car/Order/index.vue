@@ -35,8 +35,8 @@
             <span class="inline">{{order.licensePlate}}</span>
           </div>
           <div>
-            <span class="inline">时间</span>
-            <span class="inline time">{{order.makeAnAppointmentTime | timeStamp}}</span>
+            <span class="inline">预约时间</span>
+            <span class="inline time">{{order.makeAnAppointmentTime | timeStamp2}}</span>
           </div>
           <div>
             <span class="inline">服务内容</span>

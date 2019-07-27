@@ -18,16 +18,20 @@
         <div class="inline">{{order.licensePlate}}</div>
       </div>
       <div class="info">
+        <div class="inline">序号</div>
+        <div class="inline">{{order.number}}</div>
+      </div>
+      <!-- <div class="info">
         <div class="inline">停放位置</div>
         <div class="inline">{{order.locationName}}</div>
-      </div>
+      </div>-->
       <div class="info">
         <div class="inline">服务类容</div>
         <div class="inline">{{order.serviceContent}}</div>
       </div>
       <div class="info">
         <div class="inline">预约时间</div>
-        <div class="inline">{{order.makeAnAppointmentTime | timeStamp}}</div>
+        <div class="inline">{{order.makeAnAppointmentTime | timeStamp2}}</div>
       </div>
       <div class="info">
         <div class="inline">订单状态</div>
@@ -39,6 +43,13 @@
           <md-button inline size="small" v-if="order.tips == 1" @click="confirmPay()">确认已付款</md-button>
           <md-button inline size="small" v-if="order.tips == 2" @click="completeWash()">确认洗车完成</md-button>
           <md-button inline size="small" v-if="order.tips == 3" @click="completeOrder()">确认已完成</md-button>
+          <md-button
+            inline
+            size="small"
+            class="cancel"
+            :class="this.canCancel?'':'can-not-cancel'"
+            @click="cancel()"
+          >取消订单</md-button>
         </div>
       </div>
     </div>
@@ -46,12 +57,27 @@
 </template>
 
 <script>
-import { Toast } from "mand-mobile";
+import { Toast, Dialog } from "mand-mobile";
 export default {
   data() {
     return {
       order: {}
     };
+  },
+  computed: {
+    canCancel() {
+      if (!this.order) {
+        return false;
+      }
+      if (!this.order.cancelTime) {
+        return false;
+      }
+      if (this.order.cancelTime < new Date().getTime()) {
+        return false;
+      } else {
+        return true;
+      }
+    }
   },
   methods: {
     getOrder(id) {
@@ -110,6 +136,39 @@ export default {
           this.getOrder(this.order.id);
         }, 1500);
       });
+    },
+    confirmCancel() {
+      const data = {
+        content: JSON.stringify({
+          id: this.order.id,
+          userId: this.$ls.get("user").id
+        })
+      };
+      this.$http.car.cancelOrder(data).then(res => {
+        const { code, message } = res.data;
+        if (code == 0) {
+          Toast.succeed(message, 1500);
+          setTimeout(() => {
+            this.back();
+          }, 1500);
+        } else {
+          Toast.failed(message, 1500);
+        }
+      });
+    },
+    cancel() {
+      if (!this.canCancel) {
+        Toast.failed("抱歉,取消订单时间已过", 1500);
+        return;
+      }
+      Dialog.confirm({
+        content: `确认取消？`,
+        confirmText: "是",
+        cancelText: "否",
+        onConfirm: () => {
+          this.confirmCancel();
+        }
+      });
     }
   },
   mounted() {
@@ -156,8 +215,9 @@ export default {
         font-size: 14px;
         height: 30px;
         line-height: 30px;
+        padding: 0 5px;
         &:nth-child(1) {
-          margin-right: 10px;
+          margin-right: 5px;
           color: #888;
           &.complete {
             background: linear-gradient(
@@ -169,10 +229,27 @@ export default {
           }
         }
         &:nth-child(2) {
+          margin-right: 5px;
           background: linear-gradient(
             -40deg,
             rgba(67, 115, 236, 1),
             rgba(63, 157, 244, 1)
+          );
+          color: #fff;
+        }
+        &.cancel {
+          background: linear-gradient(
+            -40deg,
+            rgba(67, 115, 236, 1),
+            rgba(63, 157, 244, 1)
+          );
+          color: #fff;
+        }
+        &.can-not-cancel {
+          background: linear-gradient(
+            -40deg,
+            rgba(136, 136, 136, 1),
+            rgba(136, 136, 136, 1)
           );
           color: #fff;
         }

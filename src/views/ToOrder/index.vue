@@ -17,9 +17,9 @@ import UserInfo from "./UserInfo";
 import MealInfo from "./MealInfo";
 import PayInfo from "./PayInfo";
 const checkPickMealDate = (pickMealDate, dishType) => {
-  if (dishType.key == 2) {
-    return true;
-  }
+  // if (dishType.key == 2) {
+  //   return true;
+  // }
   if (dishType.key == 3) {
     return true;
   }

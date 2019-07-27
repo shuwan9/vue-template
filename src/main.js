@@ -1,30 +1,30 @@
-import "@/scss/index.scss"
+import "@/scss/index.scss";
 
-import install from "@/install"
+import install from "@/install";
 
-import $http from "@/axios"
+import $http from "@/axios";
 
-import filters from "@/filters"
-import router from "@/router"
-import store from "@/store"
+import filters from "@/filters";
+import router from "@/router";
+import store from "@/store";
 
-import App from "@/App.vue"
+import App from "@/App.vue";
 
-const Vue = install()
+const Vue = install();
 
-Vue.prototype.$http = $http
+Vue.prototype.$http = $http;
 
 Object.keys(filters).forEach(filter => {
-  Vue.filter(filter, filters[filter])
-})
+  Vue.filter(filter, filters[filter]);
+});
 
-Vue.config.productionTip = false
-Vue.config.devtools = true
+Vue.config.productionTip = false;
+// Vue.config.devtools = true
 
 const app = new Vue({
   router,
   store,
   render: h => h(App)
-}).$mount("#app")
+}).$mount("#app");
 
-export default app
+export default app;

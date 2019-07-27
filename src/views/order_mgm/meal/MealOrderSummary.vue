@@ -52,6 +52,7 @@
         title="选择结束时间"
         :custom-types="['yyyy', 'MM','dd']"
         :default-date="currentDate"
+        :max-date="maxDate"
         @confirm="onDatePickerConfirm2"
       ></md-date-picker>
     </div>
@@ -61,11 +62,29 @@
         <md-button inline size="small" @click="search()">查询</md-button>
       </div>
     </div>
+    <div class="summary-list">
+      <!-- <div class="title">统计</div> -->
+      <md-field v-show="total&&total>0">
+        <md-cell-item
+          v-for="item in summaryList"
+          :key="item.id"
+          :title="item.nameOfDish"
+          :addon="item.countShow"
+        />
+      </md-field>
+      <div class="total" v-show="total&&total>0">
+        <span>总计：</span>
+        <span>x {{total}}</span>
+      </div>
+      <div class="tip" v-show="!total||total==0">
+        <span>暂无汇总</span>
+      </div>
+    </div>
   </div>
 </template>
 <script>
 import { mapState } from "vuex";
-import { Selector, Field, FieldItem, Toast } from "mand-mobile";
+import { Selector, Field, FieldItem, CellItem, Toast } from "mand-mobile";
 const TYPEMISS = "请选择类别";
 const STARTTIMEMISS = "请选择开始时间";
 const ENDTIMEMISS = "请选择结束时间";
@@ -81,7 +100,8 @@ export default {
   components: {
     [Selector.name]: Selector,
     [Field.name]: Field,
-    [FieldItem.name]: FieldItem
+    [FieldItem.name]: FieldItem,
+    [CellItem.name]: CellItem
   },
   data() {
     return {
@@ -90,10 +110,12 @@ export default {
       selectorText: "熟食",
       isSelectorShow: false,
       currentDate: new Date(),
+      maxDate: new Date(),
       isDatePickerShow: false,
       isDatePickerShow2: false,
       datePickerValue: getDate2(new Date().getTime()),
-      datePickerValue2: getDate2(new Date().getTime())
+      datePickerValue2: getDate2(new Date().getTime()),
+      summaryList: []
     };
   },
   methods: {
@@ -118,24 +140,48 @@ export default {
     back() {
       this.$router.replace({ path: "/meal_order_mgm" });
     },
-    search() {
+    checkBeforeSearch() {
       if (!this.selectorValue) {
         Toast.failed(TYPEMISS, 1500);
-        return;
+        return false;
       }
       if (!this.datePickerValue) {
         Toast.failed(STARTTIMEMISS, 1500);
-        return;
+        return false;
       }
       if (!this.datePickerValue2) {
         Toast.failed(ENDTIMEMISS, 1500);
-        return;
+        return false;
       }
       const startTime = new Date(this.datePickerValue).getTime();
       const endTime = new Date(this.datePickerValue2).getTime();
       if (endTime < startTime) {
         Toast.failed(STARTOVEREND, 1500);
-        return;
+        return false;
+      }
+      return true;
+    },
+    getSearchData() {
+      return {
+        content: JSON.stringify({
+          startTime: new Date(this.datePickerValue).getTime(),
+          endTime: new Date(this.datePickerValue2).getTime(),
+          dishType: this.selectorValue
+          // ,
+          // nameOfDish: ""
+        })
+      };
+    },
+    search() {
+      if (this.checkBeforeSearch()) {
+        const data = this.getSearchData();
+        this.$http.order.getSummary(data).then(res => {
+          const { code, data, message } = res.data;
+          if (data && Array.isArray(data)) {
+            data.forEach(item => (item.countShow = `x ${item.count}`));
+            this.summaryList = data;
+          }
+        });
       }
     }
   },
@@ -149,6 +195,16 @@ export default {
           text: label
         };
       });
+    },
+    total() {
+      try {
+        const total = this.summaryList.reduce((total, item) => {
+          return total + item.count;
+        }, 0);
+        return total;
+      } catch (e) {
+        return 0;
+      }
     }
   },
   mounted() {}
@@ -160,7 +216,7 @@ export default {
   padding-top: 15px;
   .button-container {
     text-align: right;
-    padding: 10px 15px;
+    padding: 15px 15px;
     button {
       font-size: 14px;
       height: 30px;
@@ -183,6 +239,29 @@ export default {
         color: #fff;
         margin-left: 15px;
       }
+    }
+  }
+  .summary-list {
+    padding: 0 15px;
+    .title {
+      font-weight: bold;
+      font-size: 16px;
+      text-align: center;
+    }
+    .total {
+      padding: 10px 3px;
+      text-align: right;
+    }
+    .tip {
+      padding: 15px;
+      padding-top: 50px;
+      text-align: center;
+    }
+    .md-cell-item-title {
+      font-size: 14px;
+    }
+    .md-cell-item-right {
+      font-size: 14px;
     }
   }
   .md-field {

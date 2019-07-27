@@ -26,7 +26,7 @@
     </div>
     <div>
       <span class="inline">预约时间</span>
-      <span class="inline">{{orderDetail.makeAnAppointmentTime | timeStamp}}</span>
+      <span class="inline">{{orderDetail.makeAnAppointmentTime | timeStamp2}}</span>
     </div>
   </div>
 </template>

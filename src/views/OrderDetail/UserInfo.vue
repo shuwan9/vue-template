@@ -6,17 +6,69 @@
     </div>
     <div>
       <span class="inline">{{order.userPhone}}</span>
-      <span class="inline farm" v-if="order.dishType==2">取餐时间:当日17:30--21:00</span>
-      <span class="inline farm" v-if="order.dishType==3">取餐时间:&nbsp;下周一</span>
-      <span class="inline farm" v-if="order.dishType==4">取餐时间:&nbsp;下单三天后</span>
       <span class="inline" v-if="order.dishType==1">取餐时间:&nbsp;{{order.mealTakingTime | timeStamp}}</span>
+      <span class="inline" v-else>取餐时间:&nbsp;{{order.takeMealsDate}}</span>
+      <!-- <span class="inline farm" v-if="order.dishType==2">取餐时间:当日{{checkTime||'17:30--21:00'}}</span>
+      <span class="inline farm" v-if="order.dishType==3">取餐时间:&nbsp;下周{{checkTime||'一'}}</span>
+      <span class="inline farm" v-if="order.dishType==4">取餐时间:&nbsp;下单{{checkTime||'三'}}天后</span>
+      <span class="inline" v-if="order.dishType==1">取餐时间:&nbsp;{{order.mealTakingTime | timeStamp}}</span>-->
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  props: ["order"]
+  data() {
+    return {
+      time: ""
+    };
+  },
+  props: ["order"],
+  computed: {
+    checkTime() {
+      const { dishType } = this.order;
+      if (dishType == 2) {
+        return this.time;
+      } else if (dishType == 3) {
+        let week = ["一", "二", "三", "四", "五", "六", "日"];
+        return week[parseInt(this.time)];
+      } else if (dishType == 4) {
+        return this.time;
+      } else {
+        return "";
+      }
+    }
+  },
+  methods: {
+    getCheckKey() {
+      let key;
+      const { dishType } = this.order;
+      if (dishType == 2) {
+        key = "cleanVegetableTakeMealsTime";
+      } else if (dishType == 3) {
+        key = "farmDeliveryTime";
+      } else if (dishType == 4) {
+        key = "cakeDelivery";
+      } else {
+        return;
+      }
+      this.getCheckTime(key);
+    },
+    getCheckTime(key) {
+      this.$http.cmn.getCheckTime(key).then(res => {
+        const { code, data, message } = res.data;
+        this.time = data;
+      });
+    }
+  },
+  watch: {
+    order(newVal) {
+      return;
+      if (newVal.dishType) {
+        this.getCheckKey();
+      }
+    }
+  }
 };
 </script>
 
@@ -35,13 +87,14 @@ export default {
       .inline {
         &:nth-child(1) {
           text-align: left;
-          width: 40%;
+          width: 30%;
+          font-size: 12px;
         }
         &:nth-child(2) {
           text-align: right;
           color: #4373ec;
           font-size: 12px;
-          width: 56%;
+          width: 70%;
           &.status-name {
             color: #fe821e;
           }

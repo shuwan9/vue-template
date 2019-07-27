@@ -30,6 +30,13 @@ const send = (opts, cb) => {
 };
 
 const $http = {
+  cmn: {
+    getCheckTime(key) {
+      return send({
+        url: `config/config/${key}`
+      });
+    }
+  },
   login(data, cb) {
     return send(
       {
@@ -104,6 +111,13 @@ const $http = {
     cancelOrder(data) {
       return send({
         url: "varietyOfDishes/order/cancel",
+        method: "post",
+        data
+      });
+    },
+    getSummary(data) {
+      return send({
+        url: "varietyOfDishes/order/summary",
         method: "post",
         data
       });
@@ -187,6 +201,19 @@ const $http = {
     confirmPay(data) {
       return send({
         url: "carWash/order/payment",
+        method: "post",
+        data
+      });
+    },
+    getLocationList() {
+      return send({
+        url: "carWash/location/list"
+        // method: "post"
+      });
+    },
+    cancelOrder(data) {
+      return send({
+        url: "carWash/order/cancel",
         method: "post",
         data
       });

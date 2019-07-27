@@ -17,13 +17,25 @@
     </div>
     <div class="info">
       <div class="time">
+        <span class="inline width-50">预约排号</span>
+        <span class="inline width-50" @click="startOrder()" v-if="!currentDay.forTime">
+          开始预约
+          <i class="iconfont iconarrow-down"></i>
+        </span>
+        <span
+          class="inline width-50"
+          v-else
+          @click="startOrder()"
+        >{{currentDay.forTime | timeStamp2}}</span>
+      </div>
+      <!-- <div class="time">
         <span class="inline width-50">预约时间</span>
         <span class="inline width-50" @click="chooseDate()">
           {{datePickerValue?datePickerValue:'请选择预约时间'}}
           <i class="iconfont iconarrow-down"></i>
         </span>
-      </div>
-      <div class="time" :class="datePickerValue?'':'no-border'">
+      </div>-->
+      <!-- <div class="time" :class="datePickerValue?'':'no-border'">
         <span class="inline width-50">停放位置</span>
         <span class="inline width-50" @click="chooseLocation()">
           {{currentLocation.locationName?currentLocation.locationName:'请选择车辆停放位置'}}
@@ -31,12 +43,12 @@
             class="iconfont iconarrow-down"
           ></i>
         </span>
-      </div>
-      <div class="number" v-show="datePickerValue">
-        <span class="inline width-50">{{datePickerValue | timeStamp2}}</span>
-        <!-- <span class="inline width-50">剩余车位:&nbsp;{{locations.length}}</span> -->
-        <span class="inline width-50">剩余车位:&nbsp;{{restLocationNum}}</span>
-      </div>
+      </div>-->
+      <!-- <div class="number" v-show="datePickerValue">
+      <span class="inline width-50">{{datePickerValue | timeStamp2}}</span>-->
+      <!-- <span class="inline width-50">剩余车位:&nbsp;{{locations.length}}</span> -->
+      <!-- <span class="inline width-50">剩余车位:&nbsp;{{restLocationNum}}</span>
+      </div>-->
     </div>
 
     <md-date-picker
@@ -52,7 +64,7 @@
       @confirm="onDatePickerConfirm"
     ></md-date-picker>
 
-    <md-dialog
+    <!-- <md-dialog
       title="选择车位"
       :closable="true"
       v-model="openChooseCarLocationDialog"
@@ -67,6 +79,24 @@
           @click="chooseThisLocation(location)"
         >
           <span>{{location.locationName}}</span>
+        </div>
+      </div>
+    </md-dialog>-->
+    <md-dialog
+      title="预约排号"
+      :closable="true"
+      v-model="openChooseCarLocationDialog"
+      class="choose-car-dialog"
+    >
+      <div>
+        <div
+          class="inline"
+          v-for="day in days"
+          :key="day.id"
+          :class="day.choose?'active':''"
+          @click="chooseThisDay(day)"
+        >
+          <span>{{day.forTime | timeStamp2}}</span>
         </div>
       </div>
     </md-dialog>
@@ -93,7 +123,9 @@ export default {
       maxDate: getMaxDate(),
       restLocationNum: 0,
       locations: [],
+      days: [],
       currentLocation: {},
+      currentDay: {},
       openChooseCarLocationDialog: false
     };
   },
@@ -104,6 +136,20 @@ export default {
         return;
       }
       service.choose = !service.choose;
+    },
+    startOrder() {
+      this.$http.car.getLocationList().then(res => {
+        const { code, message, data } = res.data;
+        this.days = data;
+        this.openChooseCarLocationDialog = true;
+      });
+    },
+    chooseThisDay(day) {
+      this.locations.forEach(day => (day.choose = false));
+      day.choose = true;
+      this.currentDay = day;
+      this.openChooseCarLocationDialog = false;
+      this.$emit("chooseDay", day);
     },
     chooseDate() {
       this.isDatePickerShow = true;
@@ -133,6 +179,7 @@ export default {
       this.openChooseCarLocationDialog = false;
       this.$emit("chooseLocation", location);
     },
+
     getRestLocation() {
       const data = {
         content: JSON.stringify({

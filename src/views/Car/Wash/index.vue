@@ -6,6 +6,7 @@
       :services="services"
       @chooseDate="chooseDate"
       @chooseLocation="chooseLocation"
+      @chooseDay="chooseDay"
       @updateRestLocation="updateRestLocation"
     ></order-info>
     <div class="button-container width-100">
@@ -41,6 +42,7 @@ export default {
       services: [],
       currentChooseCar: null,
       currentChooseLocation: null,
+      currentChooseDay: null,
       makeAnAppointmentTime: null,
       restLocationNum: 0
     };
@@ -70,6 +72,9 @@ export default {
     chooseLocation(location) {
       this.currentChooseLocation = location;
     },
+    chooseDay(day) {
+      this.currentChooseDay = day;
+    },
     chooseDate(date) {
       this.makeAnAppointmentTime = new Date(date).getTime();
     },
@@ -86,22 +91,26 @@ export default {
         Toast.failed("请选择您的车辆", 1500);
         return false;
       }
-      if (!this.makeAnAppointmentTime) {
-        Toast.failed("请选择您的预约时间", 1500);
+      if (!this.currentChooseDay) {
+        Toast.failed("请先预约排号", 1500);
         return false;
       }
-      if (!this.currentChooseLocation) {
-        if (this.restLocationNum == 0) {
-          Toast.failed("抱歉，当前预约时间车位已满", 1500);
-          return false;
-        }
-        Toast.failed("请选择停车位置", 1500);
-        return false;
-      }
-      if (this.restLocationNum == 0) {
-        Toast.failed("抱歉，当前预约时间车位已满", 1500);
-        return false;
-      }
+      // if (!this.makeAnAppointmentTime) {
+      //   Toast.failed("请选择您的预约时间", 1500);
+      //   return false;
+      // }
+      // if (!this.currentChooseLocation) {
+      //   if (this.restLocationNum == 0) {
+      //     Toast.failed("抱歉，当前预约时间车位已满", 1500);
+      //     return false;
+      //   }
+      //   Toast.failed("请选择停车位置", 1500);
+      //   return false;
+      // }
+      // if (this.restLocationNum == 0) {
+      //   Toast.failed("抱歉，当前预约时间车位已满", 1500);
+      //   return false;
+      // }
       const chooseServices = this.services.filter(service => {
         return service.choose || service.mandatory;
       });
@@ -116,10 +125,11 @@ export default {
         userId: this.user.id,
         userPhone: this.user.phone,
         licensePlate: this.currentChooseCar.licensePlate,
-        makeAnAppointmentTime: this.makeAnAppointmentTime,
+        // makeAnAppointmentTime: this.makeAnAppointmentTime,
         price: this.servicePrice,
         detailList: getDetailList(this.services),
-        locationId: this.currentChooseLocation.id
+        carLocationId: this.currentChooseDay.id
+        // locationId: this.currentChooseLocation.id
       };
       const data = {
         content: JSON.stringify(content)

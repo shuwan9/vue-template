@@ -56,13 +56,14 @@ export default {
         }
       }
       .inline {
-        width: 50%;
+        width: 60%;
         text-align: left;
         box-sizing: border-box;
         // &:nth-child(1) {
         // }
         &:nth-child(2) {
-          padding-right: 20px;
+          width: 40%;
+          padding-right: 10px;
           text-align: right;
           color: #fe821e;
         }
