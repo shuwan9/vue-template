@@ -2,6 +2,8 @@
 
 ## 公众号自定义菜单
 
+### 测试服务器
+
 ```js
 {
     "button":[
@@ -62,6 +64,75 @@
                     "type":"view",
                     "name":"我的订单",
                     "url":"http://test.wosaitech.cn/wx_order/#/supermarket/orders"
+                },
+            ]
+        }
+    ]
+}
+```
+
+### 正式服务器
+
+```js
+{
+    "button":[
+        {
+            "name":"菜品预定",
+            "sub_button":[
+                {
+                    "type":"view",
+                    "name":"订单管理",
+                    "url":"http://wxyd.accessclient.cn/wxorder/dist/#/meal_order_mgm"
+                },
+                {
+                    "type":"view",
+                    "name":"我要预订",
+                    "url":"http://wxyd.accessclient.cn/wxorder/dist/#/order/dish"
+                },
+                {
+                    "type":"view",
+                    "name":"我的订单",
+                    "url":"http://wxyd.accessclient.cn/wxorder/dist/#/order/list"
+                },
+            ]
+        },
+        {
+            "name":"洗车服务",
+            "sub_button":[
+                {
+                    "type":"view",
+                    "name":"订单管理",
+                    "url":"http://wxyd.accessclient.cn/wxorder/dist/#/car_order_mgm"
+                },
+                {
+                    "type":"view",
+                    "name":"预约服务",
+                    "url":"http://wxyd.accessclient.cn/wxorder/dist/#/car/wash"
+                },
+                {
+                    "type":"view",
+                    "name":"我的订单",
+                    "url":"http://wxyd.accessclient.cn/wxorder/dist/#/car/order"
+                },
+            ]
+        },
+        {
+            "name":"超市购物",
+            "sub_button":[
+                {
+                    "type":"view",
+                    "name":"订单管理",
+                    "url":"http://wxyd.accessclient.cn/wxorder/dist/#/spm_order_mgm"
+                },
+                {
+                    "type":"view",
+                    "name":"我要购物",
+                    "url":"http://wxyd.accessclient.cn/wxorder/dist/#/supermarket/products"
+                },
+                {
+                    "type":"view",
+                    "name":"我的订单",
+                    "url":"http://wxyd.accessclient.cn/wxorder/dist/#/supermarket/orders"
                 },
             ]
         }

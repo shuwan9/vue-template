@@ -6,10 +6,11 @@ import { isFile } from "@/util/type";
 
 // const devBaseUrl = "http://192.168.4.228:8099/wx"
 // const devBaseUrl = "http://121.40.195.52:8081/AutoEngine/wx"
-const devBaseUrl = "http://121.40.195.52:8098/wx";
+// const devBaseUrl = "http://121.40.195.52:8098/wx";
+const devBaseUrl = "http://wxyd.accessclient.cn/wx";
 // const devBaseUrl = "http://192.168.1.132:8099/wx"
 
-const prodBaseUrl = "http://121.40.195.52:8098/wx";
+const prodBaseUrl = "http://wxyd.accessclient.cn/wx";
 // const prodBaseUrl = "http://121.40.195.52:8081/AutoEngine/wx"
 
 const baseURL =
